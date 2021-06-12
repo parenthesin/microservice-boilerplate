@@ -27,10 +27,15 @@ Clojure Microservice Boilerplate: Components, Reitit, Pedestal, Schema, Postgres
 ## Usage
 
 ### Repl
-This will build cmake files and download dependencies
+To open a nrepl
 ```bash
-clj -M:repl
+clj -M:nrepl
 ```
+To open a nrepl with all test extra-deps on it
+```bash
+clj -M:test:nrepl
+```
+
 ### Run Tests
 To run unit tests inside `./test/unit`
 ```bash
