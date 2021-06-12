@@ -15,6 +15,7 @@ Clojure Microservice Boilerplate: Components, Reitit, Pedestal, Schema, Postgres
 - [depstar](https://github.com/seancorfield/depstar) Generates Uberjars for releases
 
 ### Tests
+- [kaocha](https://github.com/lambdaisland/kaocha) Test runner
 - [state-flow](https://github.com/nubank/state-flow) Testing framework for integration tests
 - [matcher-combinators](https://github.com/nubank/matcher-combinators) Assertions in data structures
 - [pg-embedded-clj](https://github.com/Bigsy/pg-embedded-clj) Embedded PostgreSQL for integration tests
@@ -31,14 +32,19 @@ This will build cmake files and download dependencies
 clj -M:repl
 ```
 ### Run Tests
-This will run all unit tests inside `./test/unit`
+To run unit tests inside `./test/unit`
 ```bash
-clj -M:u-test
+clj -M:test :unit
 ```
-This will run all integration tests inside `./test/integration`
+To run integration tests inside `./test/integration`
 ```bash
-clj -M:i-test
+clj -M:test :integration
 ```
+To run all tests inside `./test`
+```bash
+clj -M:test
+```
+
 ### Lint
 Auto code format
 ```bash

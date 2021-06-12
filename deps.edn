@@ -1,9 +1,30 @@
-{:deps {org.clojure/clojure {:mvn/version "1.10.3"}}
- :paths ["src"]
+{:paths ["src"]
+
+ :deps {org.clojure/clojure {:mvn/version "1.10.3"}
+        prismatic/schema {:mvn/version "1.1.12"}
+        com.stuartsierra/component {:mvn/version "1.0.0"}
+        metosin/reitit-pedestal {:mvn/version "0.5.13"}
+        metosin/reitit {:mvn/version "0.5.13"}
+        metosin/reitit-swagger {:mvn/version "0.5.13"}
+        metosin/reitit-swagger-ui {:mvn/version "0.5.13"}
+        metosin/muuntaja {:mvn/version "0.6.8"}
+        clj-http/clj-http {:mvn/version "3.12.2"}
+        aero/aero {:mvn/version "1.1.6"}
+        seancorfield/next.jdbc {:mvn/version "1.2.659"}
+        honeysql/honeysql {:mvn/version "1.0.461"}
+        seancorfield/depstar {:mvn/version "2.0.216"}}
+
  :aliases
- {:lint {:extra-paths ["test"]
+ {:test {:extra-paths ["test"]
+         :extra-deps  {lambdaisland/kaocha {:mvn/version "1.0.732"}
+                       nubank/matcher-combinators {:mvn/version "3.1.4"}
+                       nubank/state-flow {:mvn/version "5.13.1"}}
+         :main-opts   ["-m" "kaocha.runner"]}
+
+  :lint {:extra-paths ["test"]
          :extra-deps {clj-kondo/clj-kondo {:mvn/version "2021.06.01"}}
          :main-opts ["-m" "clj-kondo.main" "--lint" "src" "--lint" "test"]}
+
   :lint-fix {:extra-paths ["test"]
              :extra-deps {cljfmt/cljfmt {:mvn/version "0.7.0"}}
              :main-opts ["-m" "cljfmt.main" "fix" "src" "test"]}}}
