@@ -1,0 +1,9 @@
+{:deps {org.clojure/clojure {:mvn/version "1.10.3"}}
+ :paths ["src"]
+ :aliases
+ {:lint {:extra-paths ["test"]
+         :extra-deps {clj-kondo/clj-kondo {:mvn/version "2021.06.01"}}
+         :main-opts ["-m" "clj-kondo.main" "--lint" "src" "--lint" "test"]}
+  :lint-fix {:extra-paths ["test"]
+             :extra-deps {cljfmt/cljfmt {:mvn/version "0.7.0"}}
+             :main-opts ["-m" "cljfmt.main" "fix" "src" "test"]}}}

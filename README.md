@@ -19,6 +19,10 @@ Clojure Microservice Boilerplate: Components, Reitit, Pedestal, Schema, Postgres
 - [matcher-combinators](https://github.com/nubank/matcher-combinators) Assertions in data structures
 - [pg-embedded-clj](https://github.com/Bigsy/pg-embedded-clj) Embedded PostgreSQL for integration tests
 
+### Linting
+- [clj-kondo](https://github.com/clj-kondo/clj-kondo) Code linter
+- [cljfmt](https://github.com/weavejester/cljfmt) Auto code formatting
+
 ## Usage
 
 ### Repl
@@ -35,6 +39,16 @@ This will run all integration tests inside `./test/integration`
 ```bash
 clj -M:i-test
 ```
+### Lint
+Auto code format
+```bash
+clj -M:lint-fix
+```
+Runs kondo to lint src/test files
+```bash
+clj -M:lint
+```
+
 ## License
 This is free and unencumbered software released into the public domain.  
 For more information, please refer to <http://unlicense.org/>
