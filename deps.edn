@@ -19,7 +19,8 @@
 
  :aliases
  {:test {:extra-paths ["test"]
-         :extra-deps  {lambdaisland/kaocha {:mvn/version "1.0.732"}
+         :extra-deps  {bigsy/pg-embedded-clj {:mvn/version "0.1.0"}
+                       lambdaisland/kaocha {:mvn/version "1.0.732"}
                        nubank/matcher-combinators {:mvn/version "3.1.4"}
                        nubank/state-flow {:mvn/version "5.13.1"}}
          :main-opts   ["-m" "kaocha.runner"]}

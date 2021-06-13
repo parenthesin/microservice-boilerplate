@@ -2,8 +2,12 @@
   (:require [next.jdbc :as jdbc]))
 
 (comment
+  (require '[pg-embedded-clj.core :as pg-emb])
+
+  (pg-emb/init-pg)
+
   (def db {:dbtype "postgres"
-           :dbname "my-app"
+           :dbname "postgres"
            :user "postgres"
            :password "postgres"
            :host "localhost"
@@ -22,4 +26,6 @@ create table address (
 insert into address(name,email)
   values('Sean Corfield','sean@corfield.org')"])
 
-  (jdbc/execute! ds ["select * from address"]))
+  (jdbc/execute! ds ["select * from address"])
+
+  (pg-emb/halt-pg!))

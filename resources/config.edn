@@ -2,6 +2,9 @@
  :webserver/allowed-origins #profile {:dev ".*"
                                       :prod "http://domain.com"}
  :database/port #long #profile {:dev 5432
+
                                 :prod 5432}
+ :database/db #profile {:dev "postgres"
+                        :prod "prod-postgres"}
  :database/host #profile {:dev "localhost"
                           :prod "some-cloud-server"}}
