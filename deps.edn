@@ -1,8 +1,10 @@
-{:paths ["src"]
+{:paths ["src" "resources"]
 
  :deps {org.clojure/clojure {:mvn/version "1.10.3"}
         prismatic/schema {:mvn/version "1.1.12"}
         com.stuartsierra/component {:mvn/version "1.0.0"}
+        io.pedestal/pedestal.service  {:mvn/version "0.5.9"}
+        io.pedestal/pedestal.jetty  {:mvn/version "0.5.9"} 
         metosin/reitit-pedestal {:mvn/version "0.5.13"}
         metosin/reitit {:mvn/version "0.5.13"}
         metosin/reitit-swagger {:mvn/version "0.5.13"}

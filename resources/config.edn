@@ -1,0 +1,3 @@
+{:webserver/port #long #or [#env PORT 8080]
+ :webserver/allowed-origins #profile {:dev ".*"
+                                      :prod "http://domain.com"}}
