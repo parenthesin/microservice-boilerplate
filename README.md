@@ -60,6 +60,17 @@ Runs kondo to lint src/test files
 clj -M:lint
 ```
 
+### Docker
+Start containers with postgres `user: postgres, password: postgres, hostname: db, port: 5432`  
+and [pg-admin](http://localhost:5433) `email: pg@pg.cc, password: pg, port: 5433`
+```bas
+docker-compose -f docker/docker-compose.yml up -d
+```
+Stop containers
+```bash
+docker-compose -f docker/docker-compose.yml stop
+```
+
 ## License
 This is free and unencumbered software released into the public domain.  
-For more information, please refer to <http://unlicense.org/>
+For more information, please refer to <http://unlicense.org>

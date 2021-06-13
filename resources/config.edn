@@ -1,3 +1,7 @@
-{:webserver/port #long #or [#env PORT 8080]
+{:webserver/port #long #or [#env PORT 3001]
  :webserver/allowed-origins #profile {:dev ".*"
-                                      :prod "http://domain.com"}}
+                                      :prod "http://domain.com"}
+ :database/port #long #profile {:dev 5432
+                                :prod 5432}
+ :database/host #profile {:dev "localhost"
+                          :prod "some-cloud-server"}}
