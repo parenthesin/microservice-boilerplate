@@ -19,7 +19,7 @@
    (aux.database/execute! ["insert into address(name,email)
                                values('Sam Campos de Milho','sammilhoso@email.com')"])
 
-   (match? [#:address{:id 1,
-                      :name "Sam Campos de Milho",
+   (match? [#:address{:id 1
+                      :name "Sam Campos de Milho"
                       :email "sammilhoso@email.com"}]
            (aux.database/execute! ["select * from address"]))))

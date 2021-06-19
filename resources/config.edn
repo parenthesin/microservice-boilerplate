@@ -2,16 +2,10 @@
  :webserver/allowed-origins #profile {:dev ".*"
                                       :prod "http://domain.com"}
 
- :database #profile {:dev {:dbtype "postgres"
-                           :dbname "postgres"
-                           :username "postgres"
-                           :password "postgres"
-                           :host "localhost"
-                           :port 5432}
-                     :prod {:dbtype "postgres"
-                            :dbname "prod-dbname"
-                            :username "prod-user"
-                            :password "prod-pass"
-                            :host "localhost"
-                            :port 5432}}}
+ :database {:dbtype "postgres"
+            :dbname #or [#env DB-NAME "postgres"]
+            :username #or [#env DB-USER "postgres"]
+            :password #or [#env DB-PASS "postgres"]
+            :host #or [#env DB-HOST "localhost"]
+            :port #or [#env DB-PORT 5432]}}
 
