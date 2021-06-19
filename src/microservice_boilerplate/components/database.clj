@@ -1,74 +1,33 @@
 (ns microservice-boilerplate.components.database
-  (:require [next.jdbc :as jdbc]
-            [com.stuartsierra.component :as component]))
+  (:require [clojure.tools.logging :as log]
+            [com.stuartsierra.component :as component]
+            [next.jdbc :as jdbc]
+            [next.jdbc.connection :as connection])
+  (:import (com.zaxxer.hikari HikariDataSource)))
 
 (defprotocol DatabaseProvider
   (execute [self command]
     "Low-level API to execute a command in the database"))
 
-;; TODO - allow keeping a connection pool instead of opening new connection each time an operation is done
-;; https://cljdoc.org/d/seancorfield/next.jdbc/1.0.13/doc/getting-started#connection-pooling
-(defrecord Database [connection-options]
-
+(defrecord Database [config ^HikariDataSource datasource]
   component/Lifecycle
   (start [this]
-    (->> connection-options
-         (jdbc/get-datasource)
-         (assoc this :data-source)))
-
-  (stop [this] this)
+    (let [{:keys [host port dbtype] :as db-spec} (get-in config [:config :database])]
+      (log/info :database :start {:host host :port port :dbtype dbtype})
+      (if datasource
+        this
+        (assoc this :datasource (connection/->pool HikariDataSource db-spec)))))
+  (stop [this]
+    (log/info :database :stop)
+    (if datasource
+      (do
+        (.close datasource)
+        (assoc this :datasource nil))
+      this))
 
   DatabaseProvider
   (execute [this commands]
-    (jdbc/execute! (:data-source this) commands)))
+    (jdbc/execute! (:datasource this) commands)))
 
-(defn new-database
-  [opts]
-  (map->Database {:connection-options opts}))
-
-(comment
-
-  (def db (component/start (new-database {:dbtype "sqlite"
-                                          :dbname "sqlite-db"})))
-  (execute db ["
-create table if not exists address (
-  id serial primary key,
-  name varchar(32),
-  email varchar(255)
-)"])
-
-  (execute db ["
-insert into address(name,email)
-  values('Sean Corfield','sean@corfield.org')"])
-
-  (execute db ["select * from address"]))
-
-(comment
-  (require '[pg-embedded-clj.core :as pg-emb])
-
-  (pg-emb/init-pg)
-
-
-  (def db {:dbtype "postgres"
-           :dbname "postgres"
-           :user "postgres"
-           :password "postgres"
-           :host "localhost"
-           :port "5432"})
-
-  (def ds (jdbc/get-datasource db))
-
-  (jdbc/execute! ds ["
-create table if not exists address (
-  id serial primary key,
-  name varchar(32),
-  email varchar(255)
-)"])
-
-  (jdbc/execute! ds ["
-insert into address(name,email)
-  values('Sean Corfield','sean@corfield.org')"])
-
-  (jdbc/execute! ds ["select * from address"])
-
-  (pg-emb/halt-pg!))
+(defn new-database []
+  (map->Database {}))

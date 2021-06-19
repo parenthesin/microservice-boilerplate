@@ -1,3 +1,4 @@
-{:hooks {:analyze-call {state-flow.cljtest/defflow    nubank.state-flow/defflow
-                        state-flow.core/flow          nubank.state-flow/flow
-                        state-flow.api/flow           nubank.state-flow/flow}}} 
+{:hooks {:analyze-call {integration.microservice-boilerplate.aux/init-flow nubank.state-flow/defflow
+                        state-flow.cljtest/defflow nubank.state-flow/defflow
+                        state-flow.core/flow nubank.state-flow/flow
+                        state-flow.api/flow nubank.state-flow/flow}}}

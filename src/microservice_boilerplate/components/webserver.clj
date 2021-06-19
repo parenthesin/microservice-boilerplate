@@ -56,7 +56,7 @@
     (let [{:webserver/keys [port allowed-origins]
            :keys [env]} (:config config)
           init-fn (if (= env :dev) dev-init prod-init)]
-      (logs/info :webserver :start (:router router) {:env env :port port :cors allowed-origins})
+      (logs/info :webserver :start {:env env :port port :cors allowed-origins})
       (assoc this :service
              (-> (base-service port)
                  (init-fn (:router router) allowed-origins)
