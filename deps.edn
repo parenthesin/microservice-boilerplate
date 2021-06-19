@@ -1,22 +1,24 @@
 {:paths ["src" "resources"]
 
  :deps {org.clojure/clojure {:mvn/version "1.10.3"}
-        prismatic/schema {:mvn/version "1.1.12"}
+
+        aero/aero {:mvn/version "1.1.6"}
+        clj-http/clj-http {:mvn/version "3.12.2"}
         com.stuartsierra/component {:mvn/version "1.0.0"}
-        io.pedestal/pedestal.service  {:mvn/version "0.5.9"}
+        com.zaxxer/HikariCP {:mvn/version "3.3.1"}
+        honeysql/honeysql {:mvn/version "1.0.461"}
         io.pedestal/pedestal.jetty  {:mvn/version "0.5.9"} 
-        metosin/reitit-pedestal {:mvn/version "0.5.13"}
+        io.pedestal/pedestal.service  {:mvn/version "0.5.9"}
+        metosin/muuntaja {:mvn/version "0.6.8"}
         metosin/reitit {:mvn/version "0.5.13"}
+        metosin/reitit-pedestal {:mvn/version "0.5.13"}
         metosin/reitit-swagger {:mvn/version "0.5.13"}
         metosin/reitit-swagger-ui {:mvn/version "0.5.13"}
-        metosin/muuntaja {:mvn/version "0.6.8"}
-        clj-http/clj-http {:mvn/version "3.12.2"}
-        aero/aero {:mvn/version "1.1.6"}
-        seancorfield/next.jdbc {:mvn/version "1.2.659"}
         org.postgresql/postgresql {:mvn/version "42.2.21"}
         org.xerial/sqlite-jdbc {:mvn/version "3.34.0"}
-        honeysql/honeysql {:mvn/version "1.0.461"}
-        seancorfield/depstar {:mvn/version "2.0.216"}}
+        prismatic/schema {:mvn/version "1.1.12"}
+        seancorfield/depstar {:mvn/version "2.0.216"}
+        seancorfield/next.jdbc {:mvn/version "1.2.659"}}
 
  :aliases
  {:test {:extra-paths ["test"]

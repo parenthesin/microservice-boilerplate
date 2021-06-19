@@ -1,10 +1,17 @@
 {:webserver/port #long #or [#env PORT 3001]
  :webserver/allowed-origins #profile {:dev ".*"
                                       :prod "http://domain.com"}
- :database/port #long #profile {:dev 5432
 
-                                :prod 5432}
- :database/db #profile {:dev "postgres"
-                        :prod "prod-postgres"}
- :database/host #profile {:dev "localhost"
-                          :prod "some-cloud-server"}}
+ :database #profile {:dev {:dbtype "postgres"
+                           :dbname "postgres"
+                           :username "postgres"
+                           :password "postgres"
+                           :host "localhost"
+                           :port 5432}
+                     :prod {:dbtype "postgres"
+                            :dbname "prod-dbname"
+                            :username "prod-user"
+                            :password "prod-pass"
+                            :host "localhost"
+                            :port 5432}}}
+
