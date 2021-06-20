@@ -57,7 +57,7 @@
            :keys [env]} (:config config)
           init-fn (if (= env :dev) dev-init prod-init)]
       (logs/info :webserver :start {:env env :port port :cors allowed-origins})
-      (assoc this :service
+      (assoc this :webserver
              (-> (base-service port)
                  (init-fn (:router router) allowed-origins)
                  (system-interceptors this)
@@ -66,8 +66,8 @@
 
   (stop [this]
     (logs/info :webserver :stop)
-    (server/stop (:service this))
-    (dissoc this :service)
+    (server/stop (:webserver this))
+    (dissoc this :webserver)
     this))
 
 (defn new-webserver []
