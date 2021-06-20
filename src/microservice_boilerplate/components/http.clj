@@ -54,12 +54,15 @@
     [_self {:keys [url] :as req}]
     (swap! requests merge
            (assoc req :instant (System/currentTimeMillis)))
-    (get-in responses
+    (get-in @responses
             [url]
             {:status 500
              :body "Response not set in mocks!"})))
 
+(defn reset-responses! [added-responses {:keys [responses]}]
+  (reset! responses added-responses))
+
 (defn new-http-mock
   [mocked-responses]
-  (map->HttpMock {:responses mocked-responses
+  (map->HttpMock {:responses (atom mocked-responses)
                   :requests (atom [])}))

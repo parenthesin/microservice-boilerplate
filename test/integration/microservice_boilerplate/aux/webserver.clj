@@ -8,8 +8,7 @@
 (defn- do-request [service-fn verb route body headers]
   (let [headers-with-default (merge {"Content-Type" "application/json"} headers)
         encoded-body (json/encode body)]
-    (pt/response-for
-                  service-fn verb route :headers headers-with-default :body encoded-body)))
+    (pt/response-for service-fn verb route :headers headers-with-default :body encoded-body)))
 
 (defn- parsed-response
   [{:keys [headers body] :as request}]
