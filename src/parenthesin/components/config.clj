@@ -3,11 +3,16 @@
             [clojure.java.io :as io]
             [aero.core :as aero]))
 
-(def current-profile (keyword (or (System/getenv "SYSTEM_ENV") "dev")))
+(def ^:private current-profile (keyword (or (System/getenv "SYSTEM_ENV") "dev")))
 
-(defn config [profile]
+(defn- config [profile]
   (aero/read-config (clojure.java.io/resource "config.edn")
                     {:profile profile}))
+
+(defn read-config [extra-inputs]
+  (merge (config current-profile)
+         {:env current-profile}
+         extra-inputs))
 
 (defrecord Config [config]
   component/Lifecycle
@@ -18,6 +23,4 @@
   ([]
    (new-config {}))
   ([input-map]
-   (map->Config {:config (merge (config current-profile)
-                                {:env current-profile}
-                                input-map)})))
+   (map->Config {:config (read-config input-map)})))
