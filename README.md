@@ -60,6 +60,21 @@ Runs kondo to lint src/test files
 clj -M:lint
 ```
 
+### Migrations
+To create a new migration with a name
+```bash
+clj -M:migratus create migration-name
+```
+To execute all pending migrations
+```bash
+clj -M:migratus migration
+```
+To rollback the latest migration
+```bash
+clj -M:migratus rollback
+```
+See [Migratus Usage](https://github.com/yogthos/migratus#usage) for documentation on each command.
+
 ### Docker
 Start containers with postgres `user: postgres, password: postgres, hostname: db, port: 5432`  
 and [pg-admin](http://localhost:5433) `email: pg@pg.cc, password: pg, port: 5433`

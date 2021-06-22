@@ -24,9 +24,13 @@
  {:test {:extra-paths ["test"]
          :extra-deps  {bigsy/pg-embedded-clj {:mvn/version "0.1.0"}
                        lambdaisland/kaocha {:mvn/version "1.0.861"}
+                       migratus/migratus {:mvn/version "1.3.5"}
                        nubank/matcher-combinators {:mvn/version "3.2.0"}
                        nubank/state-flow {:mvn/version "5.13.1"}}
          :main-opts   ["-m" "kaocha.runner"]}
+
+  :migratus {:extra-deps {migratus/migratus {:mvn/version "1.3.5"}}
+             :main-opts ["-m" "migrations.core"]}
 
   :lint {:extra-paths ["test"]
          :extra-deps {clj-kondo/clj-kondo {:mvn/version "2021.06.18"}}
