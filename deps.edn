@@ -4,8 +4,10 @@
 
         aero/aero {:mvn/version "1.1.6"}
         clj-http/clj-http {:mvn/version "3.12.2"}
+        com.github.seancorfield/depstar {:mvn/version "2.0.216"}
+        com.github.seancorfield/next.jdbc {:mvn/version "1.2.674"}
         com.stuartsierra/component {:mvn/version "1.0.0"}
-        com.zaxxer/HikariCP {:mvn/version "3.3.1"}
+        com.zaxxer/HikariCP {:mvn/version "4.0.3"}
         honeysql/honeysql {:mvn/version "1.0.461"}
         io.pedestal/pedestal.jetty  {:mvn/version "0.5.9"} 
         io.pedestal/pedestal.service  {:mvn/version "0.5.9"}
@@ -14,26 +16,24 @@
         metosin/reitit-pedestal {:mvn/version "0.5.13"}
         metosin/reitit-swagger {:mvn/version "0.5.13"}
         metosin/reitit-swagger-ui {:mvn/version "0.5.13"}
-        org.postgresql/postgresql {:mvn/version "42.2.21"}
+        org.postgresql/postgresql {:mvn/version "42.2.22"}
         org.xerial/sqlite-jdbc {:mvn/version "3.34.0"}
-        prismatic/schema {:mvn/version "1.1.12"}
-        seancorfield/depstar {:mvn/version "2.0.216"}
-        seancorfield/next.jdbc {:mvn/version "1.2.659"}}
+        prismatic/schema {:mvn/version "1.1.12"}}
 
  :aliases
  {:test {:extra-paths ["test"]
          :extra-deps  {bigsy/pg-embedded-clj {:mvn/version "0.1.0"}
-                       lambdaisland/kaocha {:mvn/version "1.0.732"}
-                       nubank/matcher-combinators {:mvn/version "3.1.4"}
+                       lambdaisland/kaocha {:mvn/version "1.0.861"}
+                       nubank/matcher-combinators {:mvn/version "3.2.0"}
                        nubank/state-flow {:mvn/version "5.13.1"}}
          :main-opts   ["-m" "kaocha.runner"]}
 
   :lint {:extra-paths ["test"]
-         :extra-deps {clj-kondo/clj-kondo {:mvn/version "2021.06.01"}}
+         :extra-deps {clj-kondo/clj-kondo {:mvn/version "2021.06.18"}}
          :main-opts ["-m" "clj-kondo.main" "--lint" "src" "--lint" "test"]}
 
   :lint-fix {:extra-paths ["test"]
-             :extra-deps {cljfmt/cljfmt {:mvn/version "0.7.0"}}
+             :extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
              :main-opts ["-m" "cljfmt.main" "fix" "src" "test" "--indents" "indentation.edn"]}
 
   :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.26.0"}}
