@@ -1,4 +1,4 @@
-(ns microservice-boilerplate.components.http
+(ns parenthesin.components.http
   (:require [clj-http.client :as http]
             [clj-http.util :as http-util]
             [clojure.tools.logging :as log]

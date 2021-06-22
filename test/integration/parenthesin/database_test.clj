@@ -1,11 +1,11 @@
-(ns integration.microservice-boilerplate.database-test
+(ns integration.parenthesin.database-test
   (:require [clojure.test :as clojure.test]
-            [integration.microservice-boilerplate.aux :as aux]
-            [integration.microservice-boilerplate.aux.database :as aux.database]
+            [integration.parenthesin.aux :as aux]
+            [integration.parenthesin.aux.database :as aux.database]
             [schema.test :as schema.test]
+            [state-flow.api :refer [defflow]]
             [state-flow.assertions.matcher-combinators :refer [match?]]
-            [state-flow.core :as state-flow :refer [flow]]
-            [state-flow.api :refer [defflow]]))
+            [state-flow.core :as state-flow :refer [flow]]))
 
 (clojure.test/use-fixtures :once schema.test/validate-schemas)
 

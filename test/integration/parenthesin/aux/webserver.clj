@@ -1,4 +1,4 @@
-(ns integration.microservice-boilerplate.aux.webserver
+(ns integration.parenthesin.aux.webserver
   (:require [cheshire.core :as json]
             [clojure.string :as string]
             [io.pedestal.test :as pt]

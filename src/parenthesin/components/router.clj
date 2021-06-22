@@ -1,4 +1,4 @@
-(ns microservice-boilerplate.components.router
+(ns parenthesin.components.router
   (:require [com.stuartsierra.component :as component]
             [muuntaja.core :as m]
             [reitit.coercion.schema :as reitit.schema]

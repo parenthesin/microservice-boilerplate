@@ -1,6 +1,6 @@
-(ns integration.microservice-boilerplate.aux.http
-  (:require [state-flow.api :as state-flow.api]
-            [microservice-boilerplate.components.http :as components.http]
+(ns integration.parenthesin.aux.http
+  (:require [parenthesin.components.http :as components.http]
+            [state-flow.api :as state-flow.api]
             [state-flow.core :as state-flow :refer [flow]]))
 
 (defn set-http-out-responses!

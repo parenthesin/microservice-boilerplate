@@ -1,11 +1,11 @@
-(ns integration.microservice-boilerplate.system-test
+(ns integration.parenthesin.system-test
   (:require [clojure.test :as clojure.test]
-            [integration.microservice-boilerplate.aux :as aux]
-            [integration.microservice-boilerplate.aux.database :as aux.database]
-            [integration.microservice-boilerplate.aux.http :as aux.http]
-            [integration.microservice-boilerplate.aux.webserver :as aux.webserver]
-            [microservice-boilerplate.components.database :as components.database]
-            [microservice-boilerplate.components.http :as components.http]
+            [integration.parenthesin.aux :as aux]
+            [integration.parenthesin.aux.database :as aux.database]
+            [integration.parenthesin.aux.http :as aux.http]
+            [integration.parenthesin.aux.webserver :as aux.webserver]
+            [parenthesin.components.database :as components.database]
+            [parenthesin.components.http :as components.http]
             [schema.core :as s]
             [schema.test :as schema.test]
             [state-flow.api :refer [defflow]]

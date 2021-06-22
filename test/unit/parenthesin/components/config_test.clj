@@ -1,8 +1,8 @@
-(ns unit.microservice-boilerplate.components.config-test
+(ns unit.parenthesin.components.config-test
   (:require [clojure.test :refer [deftest is testing]]
             [com.stuartsierra.component :as component]
             [matcher-combinators.test :refer [match?]]
-            [microservice-boilerplate.components.config :as components.config]))
+            [parenthesin.components.config :as components.config]))
 
 (defn- create-and-start-system!
   [{:keys [config]}]

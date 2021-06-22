@@ -1,4 +1,4 @@
-(ns microservice-boilerplate.components.database
+(ns parenthesin.components.database
   (:require [clojure.tools.logging :as log]
             [com.stuartsierra.component :as component]
             [next.jdbc :as jdbc]
