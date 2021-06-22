@@ -1,7 +1,7 @@
-(ns integration.microservice-boilerplate.webserver-test
+(ns integration.parenthesin.webserver-test
   (:require [clojure.test :as clojure.test]
-            [integration.microservice-boilerplate.aux :as aux]
-            [integration.microservice-boilerplate.aux.webserver :as aux.webserver]
+            [integration.parenthesin.aux :as aux]
+            [integration.parenthesin.aux.webserver :as aux.webserver]
             [schema.core :as s]
             [schema.test :as schema.test]
             [state-flow.api :refer [defflow]]

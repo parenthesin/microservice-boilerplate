@@ -1,4 +1,4 @@
-(ns microservice-boilerplate.components.config
+(ns parenthesin.components.config
   (:require [com.stuartsierra.component :as component]
             [clojure.java.io :as io]
             [aero.core :as aero]))

@@ -1,4 +1,4 @@
-(ns microservice-boilerplate.components.webserver
+(ns parenthesin.components.webserver
   (:require [clojure.tools.logging :as logs]
             [com.stuartsierra.component :as component]
             [io.pedestal.http :as server]

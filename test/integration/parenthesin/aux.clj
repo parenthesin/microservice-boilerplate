@@ -1,10 +1,10 @@
-(ns integration.microservice-boilerplate.aux
+(ns integration.parenthesin.aux
   (:require [com.stuartsierra.component :as component]
-            [microservice-boilerplate.components.config :as components.config]
-            [microservice-boilerplate.components.database :as components.database]
-            [microservice-boilerplate.components.http :as components.http]
-            [microservice-boilerplate.components.router :as components.router]
-            [microservice-boilerplate.components.webserver :as components.webserver]
+            [parenthesin.components.config :as components.config]
+            [parenthesin.components.database :as components.database]
+            [parenthesin.components.http :as components.http]
+            [parenthesin.components.router :as components.router]
+            [parenthesin.components.webserver :as components.webserver]
             [pg-embedded-clj.core :as pg-emb]))
 
 (defn- create-and-start-components! [routes]

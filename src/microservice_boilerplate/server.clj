@@ -1,13 +1,14 @@
 (ns microservice-boilerplate.server
   (:require [com.stuartsierra.component :as component]
-            [microservice-boilerplate.components.config :as config]
-            [microservice-boilerplate.components.database :as database]
-            [microservice-boilerplate.components.http :as http]
-            [microservice-boilerplate.components.router :as router]
-            [microservice-boilerplate.components.webserver :as webserver]
-            [microservice-boilerplate.routes :as routes]
-            [microservice-boilerplate.system :as system])
+            [parenthesin.components.config :as config]
+            [parenthesin.components.database :as database]
+            [parenthesin.components.http :as http]
+            [parenthesin.components.router :as router]
+            [parenthesin.components.webserver :as webserver]
+            [microservice-boilerplate.routes :as routes])
   (:gen-class))
+
+(def system-atom (atom nil))
 
 (defn- build-system-map []
   (component/system-map
@@ -17,10 +18,21 @@
    :database (component/using (database/new-database) [:config])
    :webserver (component/using (webserver/new-webserver) [:config :http :router :database])))
 
+(defn start-system! [system-map]
+  (->> system-map
+       component/start
+       (reset! system-atom)))
+
+#_{:clj-kondo/ignore [:unused-public-var]}
+(defn stop-system! []
+  (swap!
+   system-atom
+   (fn [s] (when s (component/stop s)))))
+
 (defn -main
   "The entry-point for 'gen-class'"
   [& _args]
-  (system/start-system! (build-system-map)))
+  (start-system! (build-system-map)))
 
 (comment
-  (system/stop-system!))
+  (stop-system!))
