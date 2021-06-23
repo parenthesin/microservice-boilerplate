@@ -1,7 +1,8 @@
 (ns migrations.core
   (:require [migratus.core :as migratus]
             [next.jdbc :as jdbc]
-            [parenthesin.components.config :as components.config]))
+            [parenthesin.components.config :as components.config])
+  (:gen-class))
 
 (defn get-connection []
   (let [{:keys [username] :as db} (-> (components.config/read-config {}) :database)]
