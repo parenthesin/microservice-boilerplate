@@ -1,6 +1,6 @@
 (ns parenthesin.components.webserver
-  (:require [clojure.tools.logging :as logs]
-            [com.stuartsierra.component :as component]
+  (:require [com.stuartsierra.component :as component]
+            [parenthesin.logs :as logs]
             [io.pedestal.http :as server]
             [io.pedestal.interceptor.helpers :refer [before]]
             [reitit.pedestal :as pedestal]))
@@ -56,7 +56,7 @@
     (let [{:webserver/keys [port allowed-origins]
            :keys [env]} (:config config)
           init-fn (if (= env :dev) dev-init prod-init)]
-      (logs/info :webserver :start {:env env :port port :cors allowed-origins})
+      (logs/log :info :webserver :start {:env env :port port :cors allowed-origins})
       (assoc this :webserver
              (-> (base-service port)
                  (init-fn (:router router) allowed-origins)
@@ -65,7 +65,7 @@
                  (server/start)))))
 
   (stop [this]
-    (logs/info :webserver :stop)
+    (logs/log :info :webserver :stop)
     (server/stop (:webserver this))
     (dissoc this :webserver)
     this))

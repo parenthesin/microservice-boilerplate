@@ -1,8 +1,8 @@
 (ns parenthesin.components.http
   (:require [clj-http.client :as http]
             [clj-http.util :as http-util]
-            [clojure.tools.logging :as log]
             [com.stuartsierra.component :as component]
+            [parenthesin.logs :as logs]
             [schema.core :as s]))
 
 (s/defschema HttpRequestInput
@@ -33,12 +33,12 @@
   HttpProvider
   (request
     [_self {:keys [method url] :as request-input}]
-    (log/info :http-out-message :method method :url url)
+    (logs/log :info :http-out-message :method method :url url)
     (let [start-time (System/currentTimeMillis)
           {:keys [status] :as response} (request-fn request-input)
           end-time (System/currentTimeMillis)
           total-time (- start-time end-time)]
-      (log/info :http-out-message-response :response-time-millis total-time
+      (logs/log :info :http-out-message-response :response-time-millis total-time
                 :status status)
       response)))
 
