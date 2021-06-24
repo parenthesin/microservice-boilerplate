@@ -5,6 +5,7 @@
             [parenthesin.components.http :as http]
             [parenthesin.components.router :as router]
             [parenthesin.components.webserver :as webserver]
+            [parenthesin.logs :as logs]
             [microservice-boilerplate.routes :as routes])
   (:gen-class))
 
@@ -19,6 +20,7 @@
    :webserver (component/using (webserver/new-webserver) [:config :http :router :database])))
 
 (defn start-system! [system-map]
+  (logs/setup [["*" :info]] :auto)
   (->> system-map
        component/start
        (reset! system-atom)))

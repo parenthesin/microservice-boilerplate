@@ -1,8 +1,8 @@
 (ns parenthesin.components.database
-  (:require [clojure.tools.logging :as log]
-            [com.stuartsierra.component :as component]
+  (:require [com.stuartsierra.component :as component]
             [next.jdbc :as jdbc]
-            [next.jdbc.connection :as connection])
+            [next.jdbc.connection :as connection]
+            [parenthesin.logs :as logs])
   (:import (com.zaxxer.hikari HikariDataSource)))
 
 (defprotocol DatabaseProvider
@@ -13,12 +13,12 @@
   component/Lifecycle
   (start [this]
     (let [{:keys [host port dbtype] :as db-spec} (get-in config [:config :database])]
-      (log/info :database :start {:host host :port port :dbtype dbtype})
+      (logs/log :info :database :start {:host host :port port :dbtype dbtype})
       (if datasource
         this
         (assoc this :datasource (connection/->pool HikariDataSource db-spec)))))
   (stop [this]
-    (log/info :database :stop)
+    (logs/log :info :database :stop)
     (if datasource
       (do
         (.close datasource)

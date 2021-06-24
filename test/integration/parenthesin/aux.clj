@@ -5,23 +5,25 @@
             [parenthesin.components.http :as components.http]
             [parenthesin.components.router :as components.router]
             [parenthesin.components.webserver :as components.webserver]
+            [parenthesin.logs :as logs]
             [pg-embedded-clj.core :as pg-emb]))
 
 (defn- create-and-start-components! [routes]
   (component/start-system
    (component/system-map
-     :config (components.config/new-config)
-     :http (components.http/new-http-mock {})
-     :router (components.router/new-router routes)
-     :database (component/using (components.database/new-database)
-                                [:config])
-     :webserver (component/using (components.webserver/new-webserver)
-                                 [:config :http :router :database]))))
+    :config (components.config/new-config)
+    :http (components.http/new-http-mock {})
+    :router (components.router/new-router routes)
+    :database (component/using (components.database/new-database)
+                               [:config])
+    :webserver (component/using (components.webserver/new-webserver)
+                                [:config :http :router :database]))))
 
 (defn start-system!
   ([]
    (start-system! []))
   ([routes]
+   (logs/setup [["*" :debug]] :auto)
    (pg-emb/init-pg)
    (create-and-start-components! routes)))
 
