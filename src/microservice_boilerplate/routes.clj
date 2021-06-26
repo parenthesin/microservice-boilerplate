@@ -1,27 +1,36 @@
 (ns microservice-boilerplate.routes
   (:require [reitit.swagger :as swagger]
+            [microservice-boilerplate.ports.http-in :as ports.http-in]
+            [microservice-boilerplate.schemas.wire-in :as schemas.wire-in]
             [schema.core :as s]))
 
 (def routes
   [["/swagger.json"
     {:get {:no-doc true
-           :swagger {:info {:title "my-api"
-                            :description "with pedestal & reitit-http"}}
+           :swagger {:info {:title "btc-wallet"
+                            :description "small sample using the microservice-boilerplate"}}
            :handler (swagger/create-swagger-handler)}}]
 
-   ["/math"
-    {:swagger {:tags ["math"]}}
+   ["/wallet"
+    {:swagger {:tags ["wallet"]}}
 
-    ["/plus"
-     {:get {:summary "plus with spec query parameters"
-            :parameters {:query {:x s/Int, :y s/Int}}
-            :responses {200 {:body {:total s/Int}}}
-            :handler (fn [{{{:keys [x y]} :query} :parameters}]
-                       {:status 200
-                        :body {:total (+ x y)}})}
-      :post {:summary "plus with spec body parameters"
-             :parameters {:body {:x s/Int, :y s/Int}}
-             :responses {200 {:body {:total s/Int}}}
-             :handler (fn [{{{:keys [x y]} :body} :parameters}]
-                        {:status 200
-                         :body {:total (+ x y)}})}}]]])
+    ["/history"
+     {:get {:summary "get all wallet entries and current total"
+            :responses {200 {:body schemas.wire-in/WalletHistory}
+                        500 {:body s/Str}}
+            :handler ports.http-in/get-history}}]
+    ["/deposit"
+     {:post {:summary "do a deposit in btc in the wallet"
+             :parameters {:body schemas.wire-in/WalletDeposit}
+             :responses {201 {:body schemas.wire-in/WalletEntry}
+                         400 {:body s/Str}
+                         500 {:body s/Str}}
+             :handler ports.http-in/do-deposit!}}]
+
+    ["/withdrawal"
+     {:post {:summary "do a withdrawal in btc in the wallet if possible"
+             :parameters {:body schemas.wire-in/WalletWithdrawal}
+             :responses {201 {:body schemas.wire-in/WalletEntry}
+                         400 {:body s/Str}
+                         500 {:body s/Str}}
+             :handler ports.http-in/do-withdrawal!}}]]])
