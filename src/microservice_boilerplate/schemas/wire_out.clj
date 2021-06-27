@@ -2,7 +2,7 @@
   (:require [schema.core :as s]))
 
 (s/defschema CoinDeskResponse
-  {:bpi {:USD {:rate s/Str
+  {:bpi {:USD {:rate_float s/Num
                s/Any s/Any}
          s/Any s/Any}
    s/Any s/Any})

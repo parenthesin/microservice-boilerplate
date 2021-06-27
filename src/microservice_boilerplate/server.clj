@@ -6,6 +6,7 @@
             [parenthesin.components.router :as router]
             [parenthesin.components.webserver :as webserver]
             [parenthesin.logs :as logs]
+            [migrations.core :as migrations]
             [microservice-boilerplate.routes :as routes])
   (:gen-class))
 
@@ -21,6 +22,7 @@
 
 (defn start-system! [system-map]
   (logs/setup [["*" :info]] :auto)
+  (migrations/migrate (migrations/configuration-with-db))
   (->> system-map
        component/start
        (reset! system-atom)))

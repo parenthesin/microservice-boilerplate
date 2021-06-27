@@ -16,13 +16,13 @@
             [reitit.swagger-ui :as swagger-ui]))
 
 (defn- coercion-error-handler [status]
-  (fn [exception _]
+  (fn [exception _request]
     (logs/log :error exception :coercion-errors (:errors (ex-data exception)))
     {:status status
      :body (if (= 400 status)
              (str "Invalid path or request parameters, with the following errors: "
                   (:errors (ex-data exception)))
-             "Error producing response.")}))
+             "Error checking path or request parameters.")}))
 
 (defn- exception-info-handler [exception _request]
   (logs/log :error exception "Server exception:" :exception exception)
