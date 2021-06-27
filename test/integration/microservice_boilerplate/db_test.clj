@@ -38,9 +38,9 @@
    :fail-fast? true}
   (flow "creates a table, insert data and checks return in the database"
     [database (state-flow.api/get-state :database)
-     :let [_ (db/insert-wallet-transaction {:id #uuid "cd989358-af38-4a2f-a1a1-88096aa425a7"
-                                            :btc_amount 2.0M
-                                            :usd_amount_at 66000.00M}
+     :let [_ (db/insert-wallet-transaction {:wallet/id #uuid "cd989358-af38-4a2f-a1a1-88096aa425a7"
+                                            :wallet/btc_amount 2.0M
+                                            :wallet/usd_amount_at 66000.00M}
                                            database)]]
 
     ;; TODO - do this check using db list history function

@@ -1,13 +1,13 @@
 (ns microservice-boilerplate.db
   (:require [parenthesin.components.database :as components.database]
             [microservice-boilerplate.schemas.types :as schemas.types]
+            [microservice-boilerplate.schemas.db :as schemas.db]
             [honeysql.format :as sql.format]
             [honeysql.helpers :as sql.helpers]
             [schema.core :as s]))
 
-;; TODO - Schema db wallet transaction
 (s/defn insert-wallet-transaction
-  [transaction :- s/Any
+  [transaction :- schemas.db/Wallet
    db :- schemas.types/DatabaseComponent]
   (->>
    (-> (sql.helpers/insert-into :wallet)
