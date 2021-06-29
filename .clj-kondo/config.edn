@@ -2,4 +2,6 @@
                         state-flow.api/defflow nubank.state-flow/defflow
                         state-flow.cljtest/defflow nubank.state-flow/defflow
                         state-flow.core/flow nubank.state-flow/flow
-                        state-flow.api/flow nubank.state-flow/flow}}}
+                        state-flow.api/flow nubank.state-flow/flow}}
+ :lint-as {clojure.test.check.properties/for-all clojure.core/let
+           clojure.test.check.clojure-test/defspec clojure.core/def}}

@@ -1,7 +1,13 @@
 (ns unit.microservice-boilerplate.adapters-test
   (:require [clojure.test :refer [deftest is testing use-fixtures]]
+            [clojure.test.check.clojure-test :refer [defspec]]
+            [clojure.test.check.properties :as properties]
             [matcher-combinators.test :refer [match?]]
             [microservice-boilerplate.adapters :as adapters]
+            [microservice-boilerplate.schemas.db :as schemas.db]
+            [microservice-boilerplate.schemas.types :as schemas.types]
+            [schema-generators.generators :as g]
+            [schema.core :as s]
             [schema.test :as schema.test]))
 
 (use-fixtures :once schema.test/validate-schemas)
@@ -33,3 +39,10 @@
   (testing "should adapt coindesk response into a number"
     (is (match? 31343.9261M
                 (adapters/wire->usd-price coindesk-response-fixture)))))
+
+(defspec spec-test 50
+  (properties/for-all [id (g/generator s/Uuid)
+                       pos-num (g/generator schemas.types/PositiveNumber schemas.types/TypesLeafGenerators)
+                       neg-num (g/generator schemas.types/NegativeNumber schemas.types/TypesLeafGenerators)]
+    (s/validate schemas.db/Wallet (adapters/withdrawal->db id neg-num pos-num))
+    (s/validate schemas.db/Wallet (adapters/deposit->db id pos-num pos-num))))
