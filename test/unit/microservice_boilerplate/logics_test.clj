@@ -1,8 +1,14 @@
 (ns unit.microservice-boilerplate.logics-test
   (:require [clojure.test :refer [deftest is testing use-fixtures]]
+            [clojure.test.check.clojure-test :refer [defspec]]
+            [clojure.test.check.properties :as properties]
+            [microservice-boilerplate.adapters :as adapters]
             [microservice-boilerplate.logics :as logics]
-            [schema.test :as schema.test]
-            [microservice-boilerplate.adapters :as adapters]))
+            [microservice-boilerplate.schemas.db :as schemas.db]
+            [microservice-boilerplate.schemas.types :as schemas.types]
+            [schema-generators.generators :as g]
+            [schema.core :as s]
+            [schema.test :as schema.test]))
 
 (use-fixtures :once schema.test/validate-schemas)
 
@@ -34,3 +40,9 @@
 
     (is (= #uuid "67272ecc-b839-37e3-9656-2895d1f0fda2"
            (logics/uuid-from-date-amount #inst "2020-10-23T22:30:34" -123.00M)))))
+
+(defspec wallet-entry-test 50
+  (properties/for-all [date (g/generator s/Inst)
+                       pos-num (g/generator schemas.types/PositiveNumber schemas.types/TypesLeafGenerators)
+                       neg-num (g/generator schemas.types/NegativeNumber schemas.types/TypesLeafGenerators)]
+                      (s/validate schemas.db/Wallet (logics/->wallet-entry date neg-num pos-num))))

@@ -1,5 +1,7 @@
 (ns microservice-boilerplate.logics
   (:require [microservice-boilerplate.adapters :as adapters]
+            [microservice-boilerplate.schemas.db :as schemas.db]
+            [microservice-boilerplate.schemas.types :as schemas.types]
             [schema.core :as s])
   (:import [java.util UUID]))
 
@@ -13,6 +15,14 @@
   [date :- s/Inst
    amount :- s/Num]
   (-> date
-    (adapters/inst->utc-formated-string "yyyy-MM-dd hh:mm:ss")
-    (str amount)
-    uuid-from-string))
+      (adapters/inst->utc-formated-string "yyyy-MM-dd hh:mm:ss")
+      (str amount)
+      uuid-from-string))
+
+(s/defn ->wallet-entry :- schemas.db/Wallet
+  [date :- s/Inst
+   amount :- s/Num
+   current-usd-price :- schemas.types/PositiveNumber]
+  #:wallet{:id (uuid-from-date-amount date amount)
+           :btc_amount amount
+           :usd_amount_at (* current-usd-price amount)})

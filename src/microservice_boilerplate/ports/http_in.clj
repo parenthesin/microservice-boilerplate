@@ -1,26 +1,25 @@
-(ns microservice-boilerplate.ports.http-in)
+(ns microservice-boilerplate.ports.http-in
+  (:require [microservice-boilerplate.controllers :as controllers]))
 
 (defn get-history
-  [{_components :components}]
+  [{components :components}]
   {:status 200
-   :body {:entries []
-          :total-btc 1M
-          :total-current-usd 1M}})
+   :body (controllers/get-wallet components)})
 
 (defn do-deposit!
-  [{{_body :body} :parameters
-    _components :components}]
-  {:status 201
-   :body {:id #uuid "d06635f3-a0a8-403c-9448-8f36c7725553"
-          :btc-amount 1M
-          :usd-amount-at 1M
-          :created-at #inst "2021-06-26"}})
+  [{{{:keys [btc]} :body} :parameters
+    components :components}]
+  (if (pos? btc)
+    {:status 201
+     :body (controllers/do-deposit! btc components)}
+    {:status 400
+     :body "btc deposit amount can't be negative."}))
 
 (defn do-withdrawal!
-  [{{_body :body} :parameters
-    _components :components}]
-  {:status 201
-   :body {:id #uuid "d06635f3-a0a8-403c-9448-8f36c7725553"
-          :btc-amount 1M
-          :usd-amount-at 1M
-          :created-at #inst "2021-06-26"}})
+  [{{{:keys [btc]} :body} :parameters
+    components :components}]
+  (if (neg? btc)
+    {:status 201
+     :body (controllers/do-withdrawal! btc components)}
+    {:status 400
+     :body "btc withdrawal amount can't be positive."}))

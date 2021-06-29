@@ -40,9 +40,9 @@
     (is (match? 31343.9261M
                 (adapters/wire->usd-price coindesk-response-fixture)))))
 
-(defspec spec-test 50
+(defspec wire-in-db-test 50
   (properties/for-all [id (g/generator s/Uuid)
                        pos-num (g/generator schemas.types/PositiveNumber schemas.types/TypesLeafGenerators)
                        neg-num (g/generator schemas.types/NegativeNumber schemas.types/TypesLeafGenerators)]
-    (s/validate schemas.db/Wallet (adapters/withdrawal->db id neg-num pos-num))
-    (s/validate schemas.db/Wallet (adapters/deposit->db id pos-num pos-num))))
+                      (s/validate schemas.db/Wallet (adapters/withdrawal->db id neg-num pos-num))
+                      (s/validate schemas.db/Wallet (adapters/deposit->db id pos-num pos-num))))
