@@ -8,13 +8,16 @@
 
 (defn- instant-now [] (java.util.Date/from (java.time.Instant/now)))
 
-(s/defn get-wallet :- {:entries :- [schemas.db/WalletEntry]
-                       :usd-price :- schemas.types/PositiveNumber}
+(s/defschema WalletHistory
+  {:entries [schemas.db/WalletEntry]
+   :usd-price schemas.types/PositiveNumber})
+
+(s/defn get-wallet :- WalletHistory
   [{:keys [http database]} :- schemas.types/Components]
   (let [current-usd-price (http-out/get-btc-usd-price http)
         wallet-entries (db/get-wallet-all-transactions database)]
-    {:entries :- wallet-entries
-     :usd-price :- current-usd-price}))
+    {:entries wallet-entries
+     :usd-price current-usd-price}))
 
 (s/defn do-deposit! :- schemas.db/WalletEntry
   [btc :- schemas.types/PositiveNumber
@@ -24,10 +27,10 @@
         entry (logics/->wallet-transaction now btc current-usd-price)]
     (db/insert-wallet-transaction entry database)))
 
-(s/defn do-withdrawal! :- schemas.db/WalletEntry
+(s/defn do-withdrawal! :- (s/maybe schemas.db/WalletEntry)
   [btc :- schemas.types/NegativeNumber
    {:keys [http database]} :- schemas.types/Components]
-  (when (logics/can-withdrawal? (db/get-wallet-total database) btc)
+  (when (logics/can-withdrawal? btc (db/get-wallet-total database))
     (let [now (instant-now)
           current-usd-price (http-out/get-btc-usd-price http)
           entry (logics/->wallet-transaction now btc current-usd-price)]

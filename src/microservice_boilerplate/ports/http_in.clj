@@ -6,7 +6,7 @@
   [{components :components}]
   (let [{:keys [entries usd-price]} (controllers/get-wallet components)]
     {:status 200
-     :body (adapters/->wallet-history entries usd-price)}))
+     :body (adapters/->wallet-history usd-price entries)}))
 
 (defn do-deposit!
   [{{{:keys [btc]} :body} :parameters
@@ -25,9 +25,7 @@
   (if (neg? btc)
     (if-let [withdrawal (controllers/do-withdrawal! btc components)]
       {:status 201
-       :body (-> btc
-                 withdrawal
-                 adapters/db->wire-in)}
+       :body (adapters/db->wire-in withdrawal)}
       {:status 400
        :body "withdrawal amount bigger than the total in the wallet."})
     {:status 400

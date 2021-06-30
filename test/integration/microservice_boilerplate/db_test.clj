@@ -22,7 +22,7 @@
 
 (defflow
   flow-integration-db-test
-  {:init (aux/start-system! create-and-start-components!) 
+  {:init (aux/start-system! create-and-start-components!)
    :cleanup aux/stop-system!
    :fail-fast? true}
   (flow "creates a table, insert data and checks return in the database"

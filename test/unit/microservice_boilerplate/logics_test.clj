@@ -45,8 +45,7 @@
   (properties/for-all [date (g/generator s/Inst)
                        pos-num (g/generator schemas.types/PositiveNumber schemas.types/TypesLeafGenerators)
                        neg-num (g/generator schemas.types/NegativeNumber schemas.types/TypesLeafGenerators)]
-    (s/validate schemas.db/WalletTransaction (logics/->wallet-transaction date neg-num pos-num))))
-
+                      (s/validate schemas.db/WalletTransaction (logics/->wallet-transaction date neg-num pos-num))))
 
 (deftest can-withdrawal-test
   (testing "checks can-withdrawal? logic"

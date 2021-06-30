@@ -46,12 +46,12 @@
   (properties/for-all [id (g/generator s/Uuid)
                        pos-num (g/generator schemas.types/PositiveNumber schemas.types/TypesLeafGenerators)
                        neg-num (g/generator schemas.types/NegativeNumber schemas.types/TypesLeafGenerators)]
-    (s/validate schemas.db/WalletTransaction (adapters/withdrawal->db id neg-num pos-num))
-    (s/validate schemas.db/WalletTransaction (adapters/deposit->db id pos-num pos-num))))
+                      (s/validate schemas.db/WalletTransaction (adapters/withdrawal->db id neg-num pos-num))
+                      (s/validate schemas.db/WalletTransaction (adapters/deposit->db id pos-num pos-num))))
 
 (defspec db-wire-in-test 50
   (properties/for-all [wallet-db (g/generator schemas.db/WalletEntry)]
-    (s/validate schemas.wire-in/WalletEntry (adapters/db->wire-in wallet-db))))
+                      (s/validate schemas.wire-in/WalletEntry (adapters/db->wire-in wallet-db))))
 
 (def wallet-entry-1
   #:wallet{:id #uuid "ecdcf860-0c2a-3abf-9af1-a70e770cea9a"

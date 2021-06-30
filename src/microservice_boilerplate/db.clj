@@ -9,12 +9,12 @@
 (s/defn insert-wallet-transaction
   [transaction :- schemas.db/WalletTransaction
    db :- schemas.types/DatabaseComponent]
-   (->> (-> (sql.helpers/insert-into :wallet)
-            (sql.helpers/values [transaction])
-            (sql.helpers/returning :*)
-            sql/format)
-        (components.database/execute db)
-        first))
+  (->> (-> (sql.helpers/insert-into :wallet)
+           (sql.helpers/values [transaction])
+           (sql.helpers/returning :*)
+           sql/format)
+       (components.database/execute db)
+       first))
 
 (s/defn get-wallet-all-transactions :- [schemas.db/WalletEntry]
   [db :- schemas.types/DatabaseComponent]
