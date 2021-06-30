@@ -2,8 +2,6 @@
   (:require [clojure.test :refer [are deftest is testing use-fixtures]]
             [clojure.test.check.clojure-test :refer [defspec]]
             [clojure.test.check.properties :as properties]
-            [matcher-combinators.matchers :as matchers]
-            [matcher-combinators.test :refer [match?]]
             [microservice-boilerplate.adapters :as adapters]
             [microservice-boilerplate.logics :as logics]
             [microservice-boilerplate.schemas.db :as schemas.db]
@@ -49,41 +47,6 @@
                        neg-num (g/generator schemas.types/NegativeNumber schemas.types/TypesLeafGenerators)]
     (s/validate schemas.db/WalletTransaction (logics/->wallet-transaction date neg-num pos-num))))
 
-(def wallet-entry-1
-  #:wallet{:id #uuid "ecdcf860-0c2a-3abf-9af1-a70e770cea9a"
-           :btc_amount 3
-           :usd_amount_at 34000M
-           :created_at #inst "2020-10-23T00:00:00"})
-
-(def wallet-entry-2
-  #:wallet{:id #uuid "67272ecc-b839-37e3-9656-2895d1f0fda2"
-           :btc_amount -1
-           :usd_amount_at 33000M
-           :created_at #inst "2020-10-24T00:00:00"})
-
-(def wallet-entry-3
-  #:wallet{:id #uuid "f4259476-efe4-3a26-ad30-1dd0ffd49fc3"
-           :btc_amount -1
-           :usd_amount_at 32000M
-           :created_at #inst "2020-10-25T00:00:00"})
-
-(def wallet-entry-4
-  #:wallet{:id #uuid "0d93f041-eae4-3af9-b5e1-f9ee844e82d9"
-           :btc_amount 1
-           :usd_amount_at 36000M
-           :created_at #inst "2020-10-26T00:00:00"})
-
-(def wallet-entries [wallet-entry-1 wallet-entry-2 wallet-entry-3 wallet-entry-4])
-
-(deftest ->wallet-history-test
-  (testing "should reduce and get totals for wallet entries and current usd"
-    (is (match? {:entries (matchers/embeds [{:id uuid?
-                                             :btc-amount number?
-                                             :usd-amount-at number?
-                                             :created-at inst?}])
-                 :total-btc 2M
-                 :total-current-usd 60000M}
-                (logics/->wallet-history 30000M wallet-entries)))))
 
 (deftest can-withdrawal-test
   (testing "checks can-withdrawal? logic"

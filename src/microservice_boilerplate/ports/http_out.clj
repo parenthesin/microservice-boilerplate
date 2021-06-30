@@ -5,7 +5,9 @@
             [schema.core :as s]))
 
 (s/defn get-btc-usd-price :- s/Num
-  [{:keys [http]} :- schemas.types/Components]
-  (->> {:url "https://api.coindesk.com/v1/bpi/currentprice.json" :method :get}
+  [http :- schemas.types/HttpComponent]
+  (->> {:url "https://api.coindesk.com/v1/bpi/currentprice.json"
+        :method :get}
        (components.http/request http)
+       :body
        adapters.price/wire->usd-price))

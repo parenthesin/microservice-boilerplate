@@ -29,5 +29,4 @@
   {:config (s/protocol component/Lifecycle)
    :http HttpComponent
    :router (s/protocol component/Lifecycle)
-   :database DatabaseComponent
-   :webserver (s/protocol component/Lifecycle)})
+   :database DatabaseComponent})

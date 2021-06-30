@@ -1,17 +1,21 @@
 (ns microservice-boilerplate.ports.http-in
-  (:require [microservice-boilerplate.controllers :as controllers]))
+  (:require [microservice-boilerplate.adapters :as adapters]
+            [microservice-boilerplate.controllers :as controllers]))
 
 (defn get-history
   [{components :components}]
-  {:status 200
-   :body (controllers/get-wallet components)})
+  (let [{:keys [entries usd-price]} (controllers/get-wallet components)]
+    {:status 200
+     :body (adapters/->wallet-history entries usd-price)}))
 
 (defn do-deposit!
   [{{{:keys [btc]} :body} :parameters
     components :components}]
   (if (pos? btc)
     {:status 201
-     :body (controllers/do-deposit! btc components)}
+     :body (-> btc
+               (controllers/do-deposit! components)
+               adapters/db->wire-in)}
     {:status 400
      :body "btc deposit amount can't be negative."}))
 
@@ -21,7 +25,9 @@
   (if (neg? btc)
     (if-let [withdrawal (controllers/do-withdrawal! btc components)]
       {:status 201
-       :body withdrawal}
+       :body (-> btc
+                 withdrawal
+                 adapters/db->wire-in)}
       {:status 400
        :body "withdrawal amount bigger than the total in the wallet."})
     {:status 400

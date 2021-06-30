@@ -1,11 +1,10 @@
 (ns integration.microservice-boilerplate.db-test
   (:require [clojure.test :as clojure.test]
             [com.stuartsierra.component :as component]
+            [integration.microservice-boilerplate.aux :as aux]
             [microservice-boilerplate.db :as db]
-            [migrations.core :as migrations]
             [parenthesin.components.config :as components.config]
             [parenthesin.components.database :as components.database]
-            [pg-embedded-clj.core :as pg-emb]
             [schema.test :as schema.test]
             [state-flow.api :refer [defflow]]
             [state-flow.assertions.matcher-combinators :refer [match?]]
@@ -21,20 +20,10 @@
     :database (component/using (components.database/new-database)
                                [:config]))))
 
-(defn start-system! []
-  (pg-emb/init-pg)
-  (migrations/migrate (migrations/configuration-with-db))
-  (create-and-start-components!))
-
-(defn stop-system!
-  [system]
-  (component/stop-system system)
-  (pg-emb/halt-pg!))
-
 (defflow
   flow-integration-db-test
-  {:init start-system!
-   :cleanup stop-system!
+  {:init (aux/start-system! create-and-start-components!) 
+   :cleanup aux/stop-system!
    :fail-fast? true}
   (flow "creates a table, insert data and checks return in the database"
     [database (state-flow.api/get-state :database)]

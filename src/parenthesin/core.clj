@@ -1,4 +1,4 @@
-(ns migrations.core
+(ns parenthesin.migrations
   (:require [migratus.core :as migratus]
             [next.jdbc :as jdbc]
             [parenthesin.components.config :as components.config])

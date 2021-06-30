@@ -1,13 +1,13 @@
 (ns microservice-boilerplate.server
   (:require [com.stuartsierra.component :as component]
+            [microservice-boilerplate.routes :as routes]
             [parenthesin.components.config :as config]
             [parenthesin.components.database :as database]
             [parenthesin.components.http :as http]
             [parenthesin.components.router :as router]
             [parenthesin.components.webserver :as webserver]
             [parenthesin.logs :as logs]
-            [migrations.core :as migrations]
-            [microservice-boilerplate.routes :as routes])
+            [parenthesin.migrations :as migrations])
   (:gen-class))
 
 (def system-atom (atom nil))
