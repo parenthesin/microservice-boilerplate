@@ -50,4 +50,8 @@
                         :btc_amount 2.0M
                         :usd_amount_at 66000.00M
                         :created_at inst?}]
-              (db/get-wallet-all-transactions database)))))
+              (db/get-wallet-all-transactions database)))
+
+    (flow "get current btc amount from db"
+      (match? 2.0M
+              (db/get-wallet-total database)))))

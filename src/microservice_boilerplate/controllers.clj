@@ -24,8 +24,9 @@
 (s/defn do-withdrawal! :- schemas.db/WalletTransaction
   [btc :- schemas.types/NegativeNumber
    {:keys [http database]} :- schemas.types/Components]
-  (let [now (java.time.Instant/now)
-        current-usd-price (http-out/get-btc-usd-price http)
-        entry (logics/->wallet-transaction now btc current-usd-price)]
-    (db/insert-wallet-transaction entry database)
-    entry))
+  (when (logics/can-withdrawal? (db/get-wallet-total database) btc)
+    (let [now (java.time.Instant/now)
+          current-usd-price (http-out/get-btc-usd-price http)
+          entry (logics/->wallet-transaction now btc current-usd-price)]
+      (db/insert-wallet-transaction entry database)
+      entry)))

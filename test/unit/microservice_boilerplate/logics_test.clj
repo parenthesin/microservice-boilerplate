@@ -1,5 +1,5 @@
 (ns unit.microservice-boilerplate.logics-test
-  (:require [clojure.test :refer [deftest is testing use-fixtures]]
+  (:require [clojure.test :refer [are deftest is testing use-fixtures]]
             [clojure.test.check.clojure-test :refer [defspec]]
             [clojure.test.check.properties :as properties]
             [matcher-combinators.matchers :as matchers]
@@ -47,7 +47,7 @@
   (properties/for-all [date (g/generator s/Inst)
                        pos-num (g/generator schemas.types/PositiveNumber schemas.types/TypesLeafGenerators)
                        neg-num (g/generator schemas.types/NegativeNumber schemas.types/TypesLeafGenerators)]
-                      (s/validate schemas.db/WalletTransaction (logics/->wallet-transaction date neg-num pos-num))))
+    (s/validate schemas.db/WalletTransaction (logics/->wallet-transaction date neg-num pos-num))))
 
 (def wallet-entry-1
   #:wallet{:id #uuid "ecdcf860-0c2a-3abf-9af1-a70e770cea9a"
@@ -84,3 +84,10 @@
                  :total-btc 2M
                  :total-current-usd 60000M}
                 (logics/->wallet-history 30000M wallet-entries)))))
+
+(deftest can-withdrawal-test
+  (testing "checks can-withdrawal? logic"
+    (are [x y] (= x y)
+      true (logics/can-withdrawal? -0.9M 1.0M)
+      true (logics/can-withdrawal? -1.0M 1.0M)
+      false (logics/can-withdrawal? -1.1M 1.0M))))

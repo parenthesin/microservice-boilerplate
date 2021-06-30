@@ -19,7 +19,10 @@
   [{{{:keys [btc]} :body} :parameters
     components :components}]
   (if (neg? btc)
-    {:status 201
-     :body (controllers/do-withdrawal! btc components)}
+    (if-let [withdrawal (controllers/do-withdrawal! btc components)]
+      {:status 201
+       :body withdrawal}
+      {:status 400
+       :body "withdrawal amount bigger than the total in the wallet."})
     {:status 400
      :body "btc withdrawal amount can't be positive."}))

@@ -35,3 +35,9 @@
     {:entries (mapv adapters/db->wire-in wallet-entries)
      :total-btc total-btc
      :total-current-usd (* current-usd-price total-btc)}))
+
+(s/defn can-withdrawal? :- s/Bool
+  [withdrawal-amount :- schemas.types/NegativeNumber
+   current-total :- schemas.types/PositiveNumber]
+  (-> (+ current-total withdrawal-amount)
+      (>= 0)))

@@ -22,3 +22,12 @@
    (-> (sql.helpers/select :id :btc_amount :usd_amount_at :created_at)
        (sql.helpers/from :wallet)
        sql.format/format)))
+
+(s/defn get-wallet-total :- s/Num
+  [db :- schemas.types/DatabaseComponent]
+  (->> (-> (sql.helpers/select :%sum.btc_amount)
+           (sql.helpers/from :wallet)
+           sql.format/format)
+       (components.database/execute db)
+       first
+       :sum))
