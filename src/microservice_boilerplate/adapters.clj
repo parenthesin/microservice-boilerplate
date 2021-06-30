@@ -1,5 +1,6 @@
 (ns microservice-boilerplate.adapters
-  (:require [microservice-boilerplate.schemas.wire-out :as schemas.wire-out]
+  (:require [microservice-boilerplate.schemas.wire-in :as schemas.wire-in]
+            [microservice-boilerplate.schemas.wire-out :as schemas.wire-out]
             [microservice-boilerplate.schemas.db :as schemas.db]
             [microservice-boilerplate.schemas.types :as schema.types]
             [schema.core :as s])
@@ -27,7 +28,7 @@
       (get-in [:bpi :USD :rate_float])
       bigdec))
 
-(s/defn ^:private wire-in->db  :- schemas.db/Wallet
+(s/defn ^:private wire-in->db  :- schemas.db/WalletTransaction
   [id :- s/Uuid
    btc :- s/Num
    usd :- schema.types/PositiveNumber]
@@ -35,14 +36,21 @@
    :wallet/btc_amount btc
    :wallet/usd_amount_at usd})
 
-(s/defn deposit->db  :- schemas.db/Wallet
+(s/defn deposit->db  :- schemas.db/WalletTransaction
   [id :- s/Uuid
    btc :- schema.types/PositiveNumber
    usd :- schema.types/PositiveNumber]
   (wire-in->db id btc usd))
 
-(s/defn withdrawal->db  :- schemas.db/Wallet
+(s/defn withdrawal->db  :- schemas.db/WalletTransaction
   [id :- s/Uuid
    btc :- schema.types/NegativeNumber
    usd :- schema.types/PositiveNumber]
   (wire-in->db id btc usd))
+
+(s/defn db->wire-in :- schemas.wire-in/WalletEntry
+  [{:wallet/keys [id btc_amount usd_amount_at created_at]} :- schemas.db/WalletEntry]
+  {:id id
+   :btc-amount btc_amount
+   :usd-amount-at usd_amount_at
+   :created-at created_at})

@@ -8,7 +8,8 @@
             [microservice-boilerplate.schemas.types :as schemas.types]
             [schema-generators.generators :as g]
             [schema.core :as s]
-            [schema.test :as schema.test]))
+            [schema.test :as schema.test]
+            [microservice-boilerplate.schemas.wire-in :as schemas.wire-in]))
 
 (use-fixtures :once schema.test/validate-schemas)
 
@@ -44,5 +45,9 @@
   (properties/for-all [id (g/generator s/Uuid)
                        pos-num (g/generator schemas.types/PositiveNumber schemas.types/TypesLeafGenerators)
                        neg-num (g/generator schemas.types/NegativeNumber schemas.types/TypesLeafGenerators)]
-                      (s/validate schemas.db/Wallet (adapters/withdrawal->db id neg-num pos-num))
-                      (s/validate schemas.db/Wallet (adapters/deposit->db id pos-num pos-num))))
+                      (s/validate schemas.db/WalletTransaction (adapters/withdrawal->db id neg-num pos-num))
+                      (s/validate schemas.db/WalletTransaction (adapters/deposit->db id pos-num pos-num))))
+
+(defspec db-wire-in-test 50
+  (properties/for-all [wallet-db (g/generator schemas.db/WalletEntry)]
+                      (s/validate schemas.wire-in/WalletEntry (adapters/db->wire-in wallet-db))))

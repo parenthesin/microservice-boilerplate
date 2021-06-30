@@ -7,7 +7,7 @@
             [schema.core :as s]))
 
 (s/defn insert-wallet-transaction
-  [transaction :- schemas.db/Wallet
+  [transaction :- schemas.db/WalletTransaction
    db :- schemas.types/DatabaseComponent]
   (components.database/execute
    db
@@ -15,10 +15,10 @@
        (sql.helpers/values [transaction])
        sql.format/format)))
 
-(s/defn get-wallet-all-transactions
+(s/defn get-wallet-all-transactions :- [schemas.db/WalletEntry]
   [db :- schemas.types/DatabaseComponent]
   (components.database/execute
    db
-   (-> (sql.helpers/select :id :btc_amount :usd_amount_at)
+   (-> (sql.helpers/select :id :btc_amount :usd_amount_at :created_at)
        (sql.helpers/from :wallet)
        sql.format/format)))

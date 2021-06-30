@@ -48,5 +48,6 @@
     (flow "check transaction was inserted in db"
       (match? [#:wallet{:id #uuid "cd989358-af38-4a2f-a1a1-88096aa425a7"
                         :btc_amount 2.0M
-                        :usd_amount_at 66000.00M}]
+                        :usd_amount_at 66000.00M
+                        :created_at inst?}]
               (db/get-wallet-all-transactions database)))))
