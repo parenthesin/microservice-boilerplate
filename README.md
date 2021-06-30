@@ -10,12 +10,15 @@ Clojure Microservice Boilerplate: Components, Reitit, Pedestal, Schema, Postgres
 - [reitit](https://github.com/metosin/reitit) Http Routes System 
 - [clj-http](https://github.com/dakrone/clj-http) Http Client
 - [aero](https://github.com/juxt/aero) Configuration file and enviroment variables manager
+- [timbre](https://github.com/ptaoussanis/timbre) Logging library
 - [next-jdbc](https://github.com/seancorfield/next-jdbc) JDBC-based layer to access databases
 - [honeysql](https://github.com/seancorfield/honeysql) SQL as Clojure data structures
 - [depstar](https://github.com/seancorfield/depstar) Generates Uberjars for releases
 
 ### Tests
 - [kaocha](https://github.com/lambdaisland/kaocha) Test runner
+- [kaocha-cloverage](https://github.com/lambdaisland/kaocha-cloverage) Kaocha plugin for code coverage reports
+- [schema-generators](https://github.com/plumatic/schema-generators) Data generation and generative testing
 - [state-flow](https://github.com/nubank/state-flow) Testing framework for integration tests
 - [matcher-combinators](https://github.com/nubank/matcher-combinators) Assertions in data structures
 - [pg-embedded-clj](https://github.com/Bigsy/pg-embedded-clj) Embedded PostgreSQL for integration tests
@@ -49,6 +52,10 @@ To run all tests inside `./test`
 ```bash
 clj -M:test
 ```
+To generate a coverage report 
+```bash
+clj -M:test --plugin kaocha.plugin/cloverage
+```
 
 ### Lint
 Auto code format
@@ -60,7 +67,7 @@ Runs kondo to lint src/test files
 clj -M:lint
 ```
 
-### Migrations
+## Migrations
 To create a new migration with a name
 ```bash
 clj -M:migratus create migration-name
@@ -75,7 +82,7 @@ clj -M:migratus rollback
 ```
 See [Migratus Usage](https://github.com/yogthos/migratus#usage) for documentation on each command.
 
-### Docker
+## Docker
 Start containers with postgres `user: postgres, password: postgres, hostname: db, port: 5432`  
 and [pg-admin](http://localhost:5433) `email: pg@pg.cc, password: pg, port: 5433`
 ```bas

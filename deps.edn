@@ -27,6 +27,7 @@
  {:test {:extra-paths ["test"]
          :extra-deps  {bigsy/pg-embedded-clj {:mvn/version "0.1.0"}
                        lambdaisland/kaocha {:mvn/version "1.0.861"}
+                       lambdaisland/kaocha-cloverage {:mvn/version "1.0.75"}
                        nubank/matcher-combinators {:mvn/version "3.2.1"}
                        nubank/state-flow {:mvn/version "5.13.1"}}
          :main-opts   ["-m" "kaocha.runner"]}

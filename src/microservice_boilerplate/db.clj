@@ -9,8 +9,16 @@
 (s/defn insert-wallet-transaction
   [transaction :- schemas.db/Wallet
    db :- schemas.types/DatabaseComponent]
-  (->>
+  (components.database/execute
+   db
    (-> (sql.helpers/insert-into :wallet)
        (sql.helpers/values [transaction])
-       sql.format/format)
-   (components.database/execute db)))
+       sql.format/format)))
+
+(s/defn get-wallet-all-transactions
+  [db :- schemas.types/DatabaseComponent]
+  (components.database/execute
+   db
+   (-> (sql.helpers/select :id :btc_amount :usd_amount_at)
+       (sql.helpers/from :wallet)
+       sql.format/format)))
