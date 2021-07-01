@@ -3,7 +3,8 @@
                         state-flow.cljtest/defflow nubank.state-flow/defflow
                         state-flow.core/flow nubank.state-flow/flow
                         state-flow.api/flow nubank.state-flow/flow}}
- :linters {:unresolved-var {:exclude [honeysql.helpers/select
+ :linters {:unsorted-required-namespaces {:level :warning}
+           :unresolved-var {:exclude [honeysql.helpers/select
                                       honeysql.helpers/from]}}
  :lint-as {honeysql.helpers/defhelper clj-kondo.lint-as/def-catch-all
            clojure.test.check.properties/for-all clojure.core/let
