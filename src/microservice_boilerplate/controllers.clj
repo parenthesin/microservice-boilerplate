@@ -1,10 +1,10 @@
 (ns microservice-boilerplate.controllers
-  (:require [microservice-boilerplate.ports.http-out :as http-out]
+  (:require [microservice-boilerplate.db :as db]
+            [microservice-boilerplate.logics :as logics]
+            [microservice-boilerplate.ports.http-out :as http-out]
             [microservice-boilerplate.schemas.db :as schemas.db]
             [microservice-boilerplate.schemas.types :as schemas.types]
-            [schema.core :as s]
-            [microservice-boilerplate.logics :as logics]
-            [microservice-boilerplate.db :as db]))
+            [schema.core :as s]))
 
 (defn- instant-now [] (java.util.Date/from (java.time.Instant/now)))
 

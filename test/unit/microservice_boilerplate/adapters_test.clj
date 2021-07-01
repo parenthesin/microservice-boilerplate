@@ -7,10 +7,10 @@
             [microservice-boilerplate.adapters :as adapters]
             [microservice-boilerplate.schemas.db :as schemas.db]
             [microservice-boilerplate.schemas.types :as schemas.types]
+            [microservice-boilerplate.schemas.wire-in :as schemas.wire-in]
             [schema-generators.generators :as g]
             [schema.core :as s]
-            [schema.test :as schema.test]
-            [microservice-boilerplate.schemas.wire-in :as schemas.wire-in]))
+            [schema.test :as schema.test]))
 
 (use-fixtures :once schema.test/validate-schemas)
 
