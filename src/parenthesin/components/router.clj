@@ -1,6 +1,7 @@
 (ns parenthesin.components.router
   (:require [com.stuartsierra.component :as component]
             [muuntaja.core :as m]
+            [parenthesin.logs :as logs]
             [reitit.coercion.schema :as reitit.schema]
             [reitit.dev.pretty :as pretty]
             [reitit.http :as http]
@@ -14,13 +15,29 @@
             [reitit.swagger :as swagger]
             [reitit.swagger-ui :as swagger-ui]))
 
+(defn- coercion-error-handler [status]
+  (fn [exception _request]
+    (logs/log :error exception :coercion-errors (:errors (ex-data exception)))
+    {:status status
+     :body (if (= 400 status)
+             (str "Invalid path or request parameters, with the following errors: "
+                  (:errors (ex-data exception)))
+             "Error checking path or request parameters.")}))
+
+(defn- exception-info-handler [exception _request]
+  (logs/log :error exception "Server exception:" :exception exception)
+  {:status 500
+   :body   "Internal error."})
+
 (def router-settings
   {;:reitit.interceptor/transform dev/print-context-diffs ;; pretty context diffs
      ;;:validate spec/validate ;; enable spec validation for route data
      ;;:reitit.spec/wrap spell/closed ;; strict top-level validation
    :exception pretty/exception
    :data {:coercion reitit.schema/coercion
-          :muuntaja m/instance
+          :muuntaja (m/create
+                     (-> m/default-options
+                         (assoc-in [:formats "application/json" :decoder-opts :bigdecimals] true)))
           :interceptors [;; swagger feature
                          swagger/swagger-feature
                              ;; query-params & form-params
@@ -30,7 +47,12 @@
                              ;; encoding response body
                          (muuntaja/format-response-interceptor)
                              ;; exception handling
-                         (exception/exception-interceptor)
+                         (exception/exception-interceptor
+                          (merge
+                           exception/default-handlers
+                           {:reitit.coercion/request-coercion  (coercion-error-handler 400)
+                            :reitit.coercion/response-coercion (coercion-error-handler 500)
+                            clojure.lang.ExceptionInfo exception-info-handler}))
                              ;; decoding request body
                          (muuntaja/format-request-interceptor)
                              ;; coercing response bodys
