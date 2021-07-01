@@ -1,7 +1,7 @@
 (ns parenthesin.components.config
-  (:require [com.stuartsierra.component :as component]
+  (:require [aero.core :as aero]
             [clojure.java.io :as io]
-            [aero.core :as aero]))
+            [com.stuartsierra.component :as component]))
 
 (def ^:private current-profile (keyword (or (System/getenv "SYSTEM_ENV") "dev")))
 
