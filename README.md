@@ -1,35 +1,7 @@
 # microservice-boilerplate
 Clojure Microservice Boilerplate: Components, Reitit, Pedestal, Schema, Postgresql and Tests
 
-## Features
-
-### System
-- [schema](https://github.com/plumatic/schema) Types and Schemas
-- [component](https://github.com/stuartsierra/component) System Lifecycle and Dependencies
-- [pedestal](https://github.com/pedestal/pedestal) Http Server
-- [reitit](https://github.com/metosin/reitit) Http Routes System 
-- [clj-http](https://github.com/dakrone/clj-http) Http Client
-- [aero](https://github.com/juxt/aero) Configuration file and enviroment variables manager
-- [timbre](https://github.com/ptaoussanis/timbre) Logging library
-- [next-jdbc](https://github.com/seancorfield/next-jdbc) JDBC-based layer to access databases
-- [honeysql](https://github.com/seancorfield/honeysql) SQL as Clojure data structures
-- [depstar](https://github.com/seancorfield/depstar) Generates Uberjars for releases
-
-### Tests
-- [kaocha](https://github.com/lambdaisland/kaocha) Test runner
-- [kaocha-cloverage](https://github.com/lambdaisland/kaocha-cloverage) Kaocha plugin for code coverage reports
-- [schema-generators](https://github.com/plumatic/schema-generators) Data generation and generative testing
-- [state-flow](https://github.com/nubank/state-flow) Testing framework for integration tests
-- [matcher-combinators](https://github.com/nubank/matcher-combinators) Assertions in data structures
-- [pg-embedded-clj](https://github.com/Bigsy/pg-embedded-clj) Embedded PostgreSQL for integration tests
-
-### Linting
-- [clj-kondo](https://github.com/clj-kondo/clj-kondo) Code linter
-- [cljfmt](https://github.com/weavejester/cljfmt) Auto code formatting
-
-## Usage
-
-### Repl
+## Repl
 To open a nrepl
 ```bash
 clj -M:nrepl
@@ -39,7 +11,7 @@ To open a nrepl with all test extra-deps on it
 clj -M:test:nrepl
 ```
 
-### Run Tests
+## Run Tests
 To run unit tests inside `./test/unit`
 ```bash
 clj -M:test :unit
@@ -57,7 +29,7 @@ To generate a coverage report
 clj -M:test --plugin kaocha.plugin/cloverage
 ```
 
-### Lint
+## Lint
 Auto code format
 ```bash
 clj -M:lint-fix
@@ -91,6 +63,53 @@ docker-compose -f docker/docker-compose.yml up -d
 Stop containers
 ```bash
 docker-compose -f docker/docker-compose.yml stop
+```
+
+## Features
+
+### System
+- [schema](https://github.com/plumatic/schema) Types and Schemas
+- [component](https://github.com/stuartsierra/component) System Lifecycle and Dependencies
+- [pedestal](https://github.com/pedestal/pedestal) Http Server
+- [reitit](https://github.com/metosin/reitit) Http Routes System 
+- [clj-http](https://github.com/dakrone/clj-http) Http Client
+- [aero](https://github.com/juxt/aero) Configuration file and enviroment variables manager
+- [timbre](https://github.com/ptaoussanis/timbre) Logging library
+- [next-jdbc](https://github.com/seancorfield/next-jdbc) JDBC-based layer to access databases
+- [honeysql](https://github.com/seancorfield/honeysql) SQL as Clojure data structures
+- [depstar](https://github.com/seancorfield/depstar) Generates Uberjars for releases
+
+### Tests
+- [kaocha](https://github.com/lambdaisland/kaocha) Test runner
+- [kaocha-cloverage](https://github.com/lambdaisland/kaocha-cloverage) Kaocha plugin for code coverage reports
+- [schema-generators](https://github.com/plumatic/schema-generators) Data generation and generative testing
+- [state-flow](https://github.com/nubank/state-flow) Testing framework for integration tests
+- [matcher-combinators](https://github.com/nubank/matcher-combinators) Assertions in data structures
+- [pg-embedded-clj](https://github.com/Bigsy/pg-embedded-clj) Embedded PostgreSQL for integration tests
+
+### Linting
+- [clj-kondo](https://github.com/clj-kondo/clj-kondo) Code linter
+- [cljfmt](https://github.com/weavejester/cljfmt) Auto code formatting
+
+## Directory Structure
+```
+./
+├── .clj-kondo -- clj-kondo configuration and classes
+├── .github
+│   └── workflows -- Github workflows folder.
+├── docker -- docker and docker-compose files for the database
+├── resources -- Application resources assets folder and configuration files.
+├── src -- Library source code and headers.
+│   ├── parenthesin -- Source for common utilities and helpers.
+│   ├── migrations -- Current database schemas, synced on service startup.
+│   └── microservice_boilerplate -- Source for the service example (wallet).
+└── test -- Test source code.
+    ├── integration -- Integration tests source (uses state-flow).
+    │   ├── parenthesin -- Tests for common utilities and helpers.
+    │   └── microservice_boilerplate -- Tests for service example (wallet).
+    └── unit -- Unity tests source (uses clojure.test).
+        ├── parenthesin -- Tests for common utilities.
+        └── microservice_boilerplate -- Tests for service example (wallet).
 ```
 
 ## License

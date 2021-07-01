@@ -25,7 +25,8 @@
    ::server/secure-headers {:content-security-policy-settings
                             {:default-src "'self'"
                              :style-src "'self' 'unsafe-inline'"
-                             :script-src "'self' 'unsafe-inline'"}}})
+                             :script-src "'self' 'unsafe-inline'"
+                             :img-src "'self' 'unsafe-inline' data: https://validator.swagger.io"}}})
 
 (defn dev-init [service-map router allowed-origins]
   (-> service-map
