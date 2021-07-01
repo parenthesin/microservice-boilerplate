@@ -1,9 +1,9 @@
 (ns microservice-boilerplate.db
-  (:require [parenthesin.components.database :as components.database]
-            [microservice-boilerplate.schemas.types :as schemas.types]
-            [microservice-boilerplate.schemas.db :as schemas.db]
-            [honey.sql :as sql]
+  (:require [honey.sql :as sql]
             [honey.sql.helpers :as sql.helpers]
+            [microservice-boilerplate.schemas.db :as schemas.db]
+            [microservice-boilerplate.schemas.types :as schemas.types]
+            [parenthesin.components.database :as components.database]
             [schema.core :as s]))
 
 (s/defn insert-wallet-transaction

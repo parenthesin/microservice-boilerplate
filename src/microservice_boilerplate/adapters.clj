@@ -1,8 +1,8 @@
 (ns microservice-boilerplate.adapters
-  (:require [microservice-boilerplate.schemas.wire-in :as schemas.wire-in]
-            [microservice-boilerplate.schemas.wire-out :as schemas.wire-out]
-            [microservice-boilerplate.schemas.db :as schemas.db]
+  (:require [microservice-boilerplate.schemas.db :as schemas.db]
             [microservice-boilerplate.schemas.types :as schemas.types]
+            [microservice-boilerplate.schemas.wire-in :as schemas.wire-in]
+            [microservice-boilerplate.schemas.wire-out :as schemas.wire-out]
             [schema.core :as s])
   (:import [java.time LocalDateTime ZoneId]
            [java.time.format DateTimeFormatter]))

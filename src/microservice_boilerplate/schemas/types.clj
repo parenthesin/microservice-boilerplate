@@ -1,6 +1,6 @@
 (ns microservice-boilerplate.schemas.types
-  (:require [com.stuartsierra.component :as component]
-            [clojure.test.check.generators :as generators]
+  (:require [clojure.test.check.generators :as generators]
+            [com.stuartsierra.component :as component]
             [parenthesin.components.database :as components.database]
             [parenthesin.components.http :as components.http]
             [schema.core :as s]))

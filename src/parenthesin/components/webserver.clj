@@ -1,8 +1,8 @@
 (ns parenthesin.components.webserver
   (:require [com.stuartsierra.component :as component]
-            [parenthesin.logs :as logs]
             [io.pedestal.http :as server]
             [io.pedestal.interceptor.helpers :refer [before]]
+            [parenthesin.logs :as logs]
             [reitit.pedestal :as pedestal]))
 
 (defn- add-system [service]
