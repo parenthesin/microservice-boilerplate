@@ -21,13 +21,13 @@
 (defn- create-and-start-components! []
   (component/start-system
    (component/system-map
-    :config (components.config/new-config)
-    :http (components.http/new-http-mock {})
-    :router (components.router/new-router routes/routes)
-    :database (component/using (components.database/new-database)
-                               [:config])
-    :webserver (component/using (components.webserver/new-webserver)
-                                [:config :http :router :database]))))
+     :config (components.config/new-config)
+     :http (components.http/new-http-mock {})
+     :router (components.router/new-router routes/routes)
+     :database (component/using (components.database/new-database)
+                                [:config])
+     :webserver (component/using (components.webserver/new-webserver)
+                                 [:config :http :router :database]))))
 
 (defflow
   flow-integration-wallet-test
@@ -58,6 +58,20 @@
                 (aux.webserver/request! {:method :post
                                          :uri    "/wallet/withdrawal"
                                          :body   {:btc -1M}})))
+
+      (flow "shouldn't insert deposit negative values into wallet"
+        (match? {:status 400
+                 :body  "btc deposit amount can't be negative."}
+                (aux.webserver/request! {:method :post
+                                         :uri    "/wallet/deposit"
+                                         :body   {:btc -2M}})))
+
+      (flow "shouldn't insert withdrawal positive values into wallet"
+        (match? {:status 400
+                 :body  "btc withdrawal amount can't be positive."}
+                (aux.webserver/request! {:method :post
+                                         :uri    "/wallet/withdrawal"
+                                         :body   {:btc 2M}})))
 
       (flow "shouldn't insert withdrawal into wallet"
         (match? {:status 400
