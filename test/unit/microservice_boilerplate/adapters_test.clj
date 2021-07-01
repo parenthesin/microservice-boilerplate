@@ -50,7 +50,7 @@
                       (s/validate schemas.db/WalletTransaction (adapters/deposit->db id pos-num pos-num))))
 
 (defspec db-wire-in-test 50
-  (properties/for-all [wallet-db (g/generator schemas.db/WalletEntry)]
+  (properties/for-all [wallet-db (g/generator schemas.db/WalletEntry schemas.types/TypesLeafGenerators)]
                       (s/validate schemas.wire-in/WalletEntry (adapters/db->wire-in wallet-db))))
 
 (def wallet-entry-1

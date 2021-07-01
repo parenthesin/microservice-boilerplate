@@ -51,8 +51,8 @@
 (s/defn db->wire-in :- schemas.wire-in/WalletEntry
   [{:wallet/keys [id btc_amount usd_amount_at created_at]} :- schemas.db/WalletEntry]
   {:id id
-   :btc-amount btc_amount
-   :usd-amount-at usd_amount_at
+   :btc-amount (bigdec btc_amount)
+   :usd-amount-at (bigdec usd_amount_at)
    :created-at created_at})
 
 (s/defn ->wallet-history :- schemas.wire-in/WalletHistory
@@ -60,5 +60,5 @@
    wallet-entries :- [schemas.db/WalletEntry]]
   (let [total-btc (reduce #(+ (:wallet/btc_amount %2) %1) 0M wallet-entries)]
     {:entries (mapv db->wire-in wallet-entries)
-     :total-btc total-btc
-     :total-current-usd (* current-usd-price total-btc)}))
+     :total-btc (bigdec total-btc)
+     :total-current-usd (bigdec (* current-usd-price total-btc))}))

@@ -1,6 +1,20 @@
 # microservice-boilerplate
 Clojure Microservice Boilerplate: Components, Reitit, Pedestal, Schema, Postgresql and Tests
 
+## About this example
+This source is a combination of two namespaces
+
+ - **parenthesin**: Helpers and wrappers to give a foundation to create new services in clojure,
+you can find components for database, http, webserver and tools for db migrations.
+ - **microservice-boilerplate**: An example of how use the boilerplate, it's a simple btc wallet
+that fetch the current btc price in USD and you can check your transaction history, do deposits and withdrawals.
+
+Verb | URL                | Description
+-----| ------------------ | ------------------------------------------------
+GET  | /wallet/history    | get all wallet entries and current total
+POST | /wallet/deposit    | do a deposit in btc in the wallet
+POST | /wallet/withdrawal | do a withdrawal in btc in the wallet if possible
+
 ## Repl
 To open a nrepl
 ```bash
@@ -54,15 +68,34 @@ clj -M:migratus rollback
 ```
 See [Migratus Usage](https://github.com/yogthos/migratus#usage) for documentation on each command.
 
+
 ## Docker
 Start containers with postgres `user: postgres, password: postgres, hostname: db, port: 5432`  
 and [pg-admin](http://localhost:5433) `email: pg@pg.cc, password: pg, port: 5433`
-```bas
+```bash
 docker-compose -f docker/docker-compose.yml up -d
 ```
 Stop containers
 ```bash
 docker-compose -f docker/docker-compose.yml stop
+```
+
+## Running the server
+First you need to have the database running, for this you can use the docker command in the step above.
+
+### Repl
+You can start a repl open and evaluate the file `src/microservice_boilerplate/server.clj` and execute following code:
+```clojure
+(start-system! (build-system-map))
+```
+
+### Uberjar
+You can generate an uberjar and execute it via java in the terminal:
+```bash
+# genarate a service.jar in the root of this repository.
+clj -X:uberjar
+# execute it via java
+java -jar service.jar
 ```
 
 ## Features
@@ -73,6 +106,7 @@ docker-compose -f docker/docker-compose.yml stop
 - [pedestal](https://github.com/pedestal/pedestal) Http Server
 - [reitit](https://github.com/metosin/reitit) Http Routes System 
 - [clj-http](https://github.com/dakrone/clj-http) Http Client
+- [cheshire](https://github.com/dakrone/cheshire) JSON encoding
 - [aero](https://github.com/juxt/aero) Configuration file and enviroment variables manager
 - [timbre](https://github.com/ptaoussanis/timbre) Logging library
 - [next-jdbc](https://github.com/seancorfield/next-jdbc) JDBC-based layer to access databases
