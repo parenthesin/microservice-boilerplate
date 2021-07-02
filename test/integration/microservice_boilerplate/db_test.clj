@@ -1,7 +1,7 @@
 (ns integration.microservice-boilerplate.db-test
   (:require [clojure.test :as clojure.test]
             [com.stuartsierra.component :as component]
-            [integration.microservice-boilerplate.aux :as aux]
+            [integration.microservice-boilerplate.util :as util]
             [microservice-boilerplate.db :as db]
             [parenthesin.components.config :as components.config]
             [parenthesin.components.database :as components.database]
@@ -22,8 +22,8 @@
 
 (defflow
   flow-integration-db-test
-  {:init (aux/start-system! create-and-start-components!)
-   :cleanup aux/stop-system!
+  {:init (util/start-system! create-and-start-components!)
+   :cleanup util/stop-system!
    :fail-fast? true}
   (flow "creates a table, insert data and checks return in the database"
     [database (state-flow.api/get-state :database)]

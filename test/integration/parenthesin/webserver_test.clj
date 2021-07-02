@@ -1,7 +1,7 @@
 (ns integration.parenthesin.webserver-test
   (:require [clojure.test :as clojure.test]
-            [integration.parenthesin.aux :as aux]
-            [integration.parenthesin.aux.webserver :as aux.webserver]
+            [integration.parenthesin.util :as util]
+            [integration.parenthesin.util.webserver :as util.webserver]
             [schema.core :as s]
             [schema.test :as schema.test]
             [state-flow.api :refer [defflow]]
@@ -27,19 +27,19 @@
 
 (defflow
   flow-integration-webserver-test
-  {:init (partial aux/start-system! test-routes)
-   :cleanup aux/stop-system!
+  {:init (partial util/start-system! test-routes)
+   :cleanup util/stop-system!
    :fail-fast? true}
   (flow "should interact test-routes"
     (flow "should sum the get params x & y via get"
       (match? {:status 200
                :body {:total 7}}
-              (aux.webserver/request! {:method  :get
+              (util.webserver/request! {:method  :get
                                        :uri     (str "/plus?x=" 3 "&y=" 4)})))
     (flow "should sum the body x & y via post"
       (match? {:status 200
                :body {:total 7}}
-              (aux.webserver/request! {:method  :post
+              (util.webserver/request! {:method  :post
                                        :uri     "/plus"
                                        :body    {:x 4
                                                  :y 3}})))))

@@ -1,9 +1,9 @@
 (ns integration.microservice-boilerplate.wallet-test
   (:require [clojure.test :as clojure.test]
             [com.stuartsierra.component :as component]
-            [integration.microservice-boilerplate.aux :as aux]
-            [integration.parenthesin.aux.http :as aux.http]
-            [integration.parenthesin.aux.webserver :as aux.webserver]
+            [integration.microservice-boilerplate.util :as util]
+            [integration.parenthesin.util.http :as util.http]
+            [integration.parenthesin.util.webserver :as util.webserver]
             [matcher-combinators.matchers :as matchers]
             [microservice-boilerplate.routes :as routes]
             [parenthesin.components.config :as components.config]
@@ -21,23 +21,23 @@
 (defn- create-and-start-components! []
   (component/start-system
    (component/system-map
-     :config (components.config/new-config)
-     :http (components.http/new-http-mock {})
-     :router (components.router/new-router routes/routes)
-     :database (component/using (components.database/new-database)
-                                [:config])
-     :webserver (component/using (components.webserver/new-webserver)
-                                 [:config :http :router :database]))))
+    :config (components.config/new-config)
+    :http (components.http/new-http-mock {})
+    :router (components.router/new-router routes/routes)
+    :database (component/using (components.database/new-database)
+                               [:config])
+    :webserver (component/using (components.webserver/new-webserver)
+                                [:config :http :router :database]))))
 
 (defflow
   flow-integration-wallet-test
-  {:init (aux/start-system! create-and-start-components!)
-   :cleanup aux/stop-system!
+  {:init (util/start-system! create-and-start-components!)
+   :cleanup util/stop-system!
    :fail-fast? true}
   (flow "should interact with system"
 
     (flow "prepare system with http-out mocks"
-      (aux.http/set-http-out-responses! {"https://api.coindesk.com/v1/bpi/currentprice.json"
+      (util.http/set-http-out-responses! {"https://api.coindesk.com/v1/bpi/currentprice.json"
                                          {:body {:bpi {:USD {:rate_float 30000.00}}}
                                           :status 200}})
 
@@ -46,7 +46,7 @@
                                   :body  {:id string?
                                           :btc-amount 2
                                           :usd-amount-at 60000.0}})
-                (aux.webserver/request! {:method :post
+                (util.webserver/request! {:method :post
                                          :uri    "/wallet/deposit"
                                          :body   {:btc 2M}})))
 
@@ -55,28 +55,28 @@
                                   :body  {:id string?
                                           :btc-amount -1
                                           :usd-amount-at -30000.0}})
-                (aux.webserver/request! {:method :post
+                (util.webserver/request! {:method :post
                                          :uri    "/wallet/withdrawal"
                                          :body   {:btc -1M}})))
 
       (flow "shouldn't insert deposit negative values into wallet"
         (match? {:status 400
                  :body  "btc deposit amount can't be negative."}
-                (aux.webserver/request! {:method :post
+                (util.webserver/request! {:method :post
                                          :uri    "/wallet/deposit"
                                          :body   {:btc -2M}})))
 
       (flow "shouldn't insert withdrawal positive values into wallet"
         (match? {:status 400
                  :body  "btc withdrawal amount can't be positive."}
-                (aux.webserver/request! {:method :post
+                (util.webserver/request! {:method :post
                                          :uri    "/wallet/withdrawal"
                                          :body   {:btc 2M}})))
 
       (flow "shouldn't insert withdrawal into wallet"
         (match? {:status 400
                  :body  "withdrawal amount bigger than the total in the wallet."}
-                (aux.webserver/request! {:method :post
+                (util.webserver/request! {:method :post
                                          :uri    "/wallet/withdrawal"
                                          :body   {:btc -2M}})))
 
@@ -92,5 +92,5 @@
                                                     :created-at string?}]
                                          :total-btc 1
                                          :total-current-usd 30000.0}})
-                (aux.webserver/request! {:method :get
+                (util.webserver/request! {:method :get
                                          :uri    "/wallet/history"}))))))
