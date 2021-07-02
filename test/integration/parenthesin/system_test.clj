@@ -1,9 +1,9 @@
 (ns integration.parenthesin.system-test
   (:require [clojure.test :as clojure.test]
-            [integration.parenthesin.aux :as aux]
-            [integration.parenthesin.aux.database :as aux.database]
-            [integration.parenthesin.aux.http :as aux.http]
-            [integration.parenthesin.aux.webserver :as aux.webserver]
+            [integration.parenthesin.util :as aux]
+            [integration.parenthesin.util.database :as util.database]
+            [integration.parenthesin.util.http :as util.http]
+            [integration.parenthesin.util.webserver :as util.webserver]
             [parenthesin.components.database :as components.database]
             [parenthesin.components.http :as components.http]
             [schema.core :as s]
@@ -56,17 +56,17 @@
   (flow "should interact with system"
 
     (flow "prepare system with http-out mocks and creating tables"
-      (aux.http/set-http-out-responses! {"http://coinbase.org" {:body {:rate 35000.0M}
+      (util.http/set-http-out-responses! {"http://coinbase.org" {:body {:rate 35000.0M}
                                                                 :status 200}})
 
-      (aux.database/execute! ["create table if not exists wallet (
+      (util.database/execute! ["create table if not exists wallet (
                                   id serial primary key,
                                   price decimal)"])
 
       (flow "should insert deposit into wallet"
         (match? {:status 201
                  :body {:usd 70000.0}}
-                (aux.webserver/request! {:method :post
+                (util.webserver/request! {:method :post
                                          :uri    "/wallet/deposit"
                                          :body   {:btc 2M}})))
 
@@ -74,5 +74,5 @@
         (match? {:status 200
                  :body [{:id 1
                          :amount 70000.0}]}
-                (aux.webserver/request! {:method :get
+                (util.webserver/request! {:method :get
                                          :uri    "/wallet/list"}))))))

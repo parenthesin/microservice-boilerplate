@@ -1,4 +1,4 @@
-(ns integration.parenthesin.aux.http
+(ns integration.parenthesin.util.http
   (:require [parenthesin.components.http :as components.http]
             [state-flow.api :as state-flow.api]
             [state-flow.core :as state-flow :refer [flow]]))

@@ -1,4 +1,4 @@
-(ns integration.parenthesin.aux
+(ns integration.parenthesin.util
   (:require [com.stuartsierra.component :as component]
             [parenthesin.components.config :as components.config]
             [parenthesin.components.database :as components.database]

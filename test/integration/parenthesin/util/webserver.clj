@@ -1,4 +1,4 @@
-(ns integration.parenthesin.aux.webserver
+(ns integration.parenthesin.util.webserver
   (:require [cheshire.core :as json]
             [clojure.string :as string]
             [io.pedestal.test :as pt]
