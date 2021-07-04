@@ -1,6 +1,6 @@
 {:webserver/port #long #or [#env PORT 3001]
  :webserver/allowed-origins #profile {:dev ".*"
-                                      :prod "http://domain.com"}
+                                      :prod ".*"}
 
  :database {:dbtype "postgres"
             :dbname #or [#env DB-NAME "postgres"]

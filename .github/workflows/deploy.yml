@@ -1,9 +1,9 @@
-name: Tests
+name: Deploy
 
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  pull_request:
+  push:
     branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -11,7 +11,7 @@ on:
 
 jobs:
 
-  tests:
+  run_tests:
 
     strategy:
       matrix:
@@ -45,13 +45,8 @@ jobs:
       - name: Execute clojure code
         run: clojure -M:test ${{ matrix.namespace }}
 
-  check-lint:
-
-    strategy:
-      matrix:
-        operating-system: [ubuntu-latest]
-
-    runs-on: ${{ matrix.operating-system }}
+  build_jar:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -75,5 +70,44 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/deps.edn') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Execute clojure code
-        run: clojure -M:lint
+      - name: Generate uberjar
+        run: clojure -X:uberjar
+
+      - name: Upload uberjar artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: built-uberjar
+          path: service.jar
+          retention-days: 1
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [run_tests, build_jar]
+
+    steps:
+    - name: Download uberjar artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: built-uberjar
+
+    - name: Heroku login credentials
+      run: |
+        cat > ~/.netrc <<EOF
+          machine api.heroku.com
+            login $HEROKU_EMAIL
+            password $HEROKU_API_KEY
+          machine git.heroku.com
+            login $HEROKU_EMAIL
+            password $HEROKU_API_KEY
+        EOF
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+
+    - name: Heroku CLI Plugin for Java
+      run: heroku plugins:install java
+
+    - name: Heroku Deploy jar
+      run: heroku deploy:jar service.jar --app $HEROKU_APP_NAME
+      env:
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
