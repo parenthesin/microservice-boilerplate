@@ -19,6 +19,8 @@
 (defn base-service [port]
   {::server/port port
    ::server/type :jetty
+   ::server/host "0.0.0.0"
+   ::server/join? true
    ;; no pedestal routes
    ::server/routes []
    ;; allow serving the swagger-ui styles & scripts from self
