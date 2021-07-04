@@ -13,10 +13,11 @@ on:
 
 jobs:
 
-  unit-tests:
+  tests:
 
     strategy:
       matrix:
+        namespace: [ unit, integration ]
         operating-system: [ubuntu-latest]
 
     runs-on: ${{ matrix.operating-system }}
@@ -36,34 +37,15 @@ jobs:
         with:
           tools-deps: 1.10.3.882
 
-      - name: Execute clojure code
-        run: clojure -M:test :unit
-
-  integration-tests:
-
-    strategy:
-      matrix:
-        operating-system: [ubuntu-latest]
-
-    runs-on: ${{ matrix.operating-system }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Prepare java
-        uses: actions/setup-java@v2.1.0
+      - name: Cache Maven packages
+        uses: actions/cache@v2.1.4
         with:
-          distribution: 'adopt'
-          java-version: '11'
-
-      - name: Install clojure tools-deps
-        uses: DeLaGuardo/setup-clojure@master
-        with:
-          tools-deps: 1.10.3.882
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-tests-${{ hashFiles('**/deps.edn') }}
+          restore-keys: ${{ runner.os }}-m2-tests
 
       - name: Execute clojure code
-        run: clojure -M:test :integration
+        run: clojure -M:test ${{ matrix.namespace }}
 
   check-lint:
 
@@ -87,6 +69,13 @@ jobs:
         uses: DeLaGuardo/setup-clojure@master
         with:
           tools-deps: 1.10.3.882
+
+      - name: Cache Maven packages
+        uses: actions/cache@v2.1.4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-lint-${{ hashFiles('**/deps.edn') }}
+          restore-keys: ${{ runner.os }}-m2-lint
 
       - name: Execute clojure code
         run: clojure -M:lint
