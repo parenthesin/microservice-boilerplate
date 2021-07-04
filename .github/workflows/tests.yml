@@ -41,8 +41,8 @@ jobs:
         uses: actions/cache@v2.1.4
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-tests-${{ hashFiles('**/deps.edn') }}
-          restore-keys: ${{ runner.os }}-m2-tests
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/deps.edn') }}
+          restore-keys: ${{ runner.os }}-m2
 
       - name: Execute clojure code
         run: clojure -M:test ${{ matrix.namespace }}
@@ -74,8 +74,8 @@ jobs:
         uses: actions/cache@v2.1.4
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-lint-${{ hashFiles('**/deps.edn') }}
-          restore-keys: ${{ runner.os }}-m2-lint
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/deps.edn') }}
+          restore-keys: ${{ runner.os }}-m2
 
       - name: Execute clojure code
         run: clojure -M:lint
