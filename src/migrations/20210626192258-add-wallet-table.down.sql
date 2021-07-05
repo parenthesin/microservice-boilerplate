@@ -1,5 +1,0 @@
-DROP TABLE IF EXISTS wallet;
-
---;;
-
-DROP EXTENSION IF EXISTS "uuid-ossp";

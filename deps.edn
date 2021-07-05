@@ -17,6 +17,7 @@
         metosin/reitit-swagger {:mvn/version "0.5.13"}
         metosin/reitit-swagger-ui {:mvn/version "0.5.13"}
         migratus/migratus {:mvn/version "1.3.5"}
+        org.bouncycastle/bcprov-jdk15on {:mvn/version "1.61"}
         org.postgresql/postgresql {:mvn/version "42.2.22"}
         org.slf4j/slf4j-api {:mvn/version "1.7.31"}
         org.xerial/sqlite-jdbc {:mvn/version "3.36.0.1"}
@@ -45,7 +46,7 @@
             :exec-fn hf.depstar/uberjar
             :exec-args {:jar "service.jar"
                         :aot true
-                        :main-class microservice-boilerplate.server}}
+                        :main-class super-dice-roll.server}}
 
   :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.26.0"}}
           :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}}}
