@@ -108,6 +108,6 @@ jobs:
       run: heroku plugins:install java
 
     - name: Heroku Deploy jar
-      run: heroku deploy:jar service.jar --app $HEROKU_APP_NAME
+      run: heroku deploy:jar service.jar --app $HEROKU_APP_NAME --jdk 11
       env:
         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
