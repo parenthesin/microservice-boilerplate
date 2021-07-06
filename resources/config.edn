@@ -1,5 +1,5 @@
 {:webserver/port #long #or [#env PORT 3001]
-
+ :discord {:app-public-key #or [#env APPLICATION_PUBLIC_KEY ""]}
  :database {:dbtype "postgres"
             :dbname #or [#env DB-NAME "postgres"]
             :username #or [#env DB-USER "postgres"]
