@@ -29,6 +29,15 @@
   {:status 500
    :body   "Internal error."})
 
+(defn store-raw-body []
+  {:name ::store-raw-body
+   :enter (fn [ctx]
+            (let [request (:request ctx)
+                  body (.readAllBytes (:body request))]
+              (-> ctx
+                  (assoc-in [:request :body] body)
+                  (assoc :raw-body body))))})
+
 (def router-settings
   {;:reitit.interceptor/transform dev/print-context-diffs ;; pretty context diffs
      ;;:validate spec/validate ;; enable spec validation for route data
@@ -38,7 +47,8 @@
           :muuntaja (m/create
                      (-> m/default-options
                          (assoc-in [:formats "application/json" :decoder-opts :bigdecimals] true)))
-          :interceptors [;; swagger feature
+          :interceptors [(store-raw-body)
+                         ;; swagger feature
                          swagger/swagger-feature
                              ;; query-params & form-params
                          (parameters/parameters-interceptor)

@@ -14,6 +14,6 @@
                   x-signature-ed25519 (get-in ctx [:request :headers "x-signature-ed25519"])
                   x-signature-timestamp (get-in ctx [:request :headers "x-signature-timestamp"])]
 
-              (if (valid-request-interaction? app-public-key x-signature-ed25519 x-signature-timestamp (:body request))
+              (if (valid-request-interaction? app-public-key x-signature-ed25519 x-signature-timestamp (slurp (:raw-body ctx)))
                 ctx
                 (assoc ctx :response {:status 401 :body "invalid request signature"}))))})
