@@ -11,7 +11,7 @@
        :body {:type 1}}
     {:status 200
      :body {:type 4
-            :tts false
-            :content "Congrats on sending your command!"
-            :embeds []
-            :allowed_mentions {:parse []}}}))
+            :data {:tts false
+                   :content "Aeeeeeeee caralho! Fala brother beleza? Eu não sei fazer nada ainda parsa!"
+                   :embeds []
+                   :allowed_mentions {:parse []}}}}))
