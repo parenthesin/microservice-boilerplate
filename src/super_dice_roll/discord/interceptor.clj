@@ -1,9 +1,5 @@
 (ns super-dice-roll.discord.interceptor
-  (:require [parenthesin.logs :as logs]
-            [super-dice-roll.discord.security :as discord.security]))
-
-(defn valid-request-interaction? [public-key timestamp body signature]
-  (discord.security/verify-request public-key timestamp body signature))
+  (:require [super-dice-roll.discord.security :as discord.security]))
 
 (defn authentication-interceptor []
   {:name ::validate-request-interaction
@@ -14,17 +10,10 @@
                   x-signature-ed25519 (get-in ctx [:request :headers "x-signature-ed25519"])
                   x-signature-timestamp (get-in ctx [:request :headers "x-signature-timestamp"])
                   raw-body (slurp (:raw-body ctx))
-                  is-valid-request? (valid-request-interaction? app-public-key
-                                                                x-signature-timestamp
-                                                                raw-body
-                                                                x-signature-ed25519)]
-
-              (logs/log :info {:header {:sig x-signature-ed25519
-                                        :time x-signature-timestamp}
-                               :public-key app-public-key
-                               :body raw-body
-                               :valid is-valid-request?})
-
+                  is-valid-request? (discord.security/verify-request app-public-key
+                                                                     x-signature-timestamp
+                                                                     raw-body
+                                                                     x-signature-ed25519)]
               (if is-valid-request?
                 ctx
                 (assoc ctx :response {:headers {"Content-Type" "application/text"}
