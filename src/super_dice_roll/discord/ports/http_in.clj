@@ -9,9 +9,9 @@
   (case type
     1 {:status 200
        :body {:type 1}}
-    4 {:status 200
-       :body {:type 4
-              :tts false
-              :content "Congrats on sending your command!"
-              :embeds []
-              :allowed_mentions {:parse []}}}))
+    {:status 200
+     :body {:type 4
+            :tts false
+            :content "Congrats on sending your command!"
+            :embeds []
+            :allowed_mentions {:parse []}}}))
