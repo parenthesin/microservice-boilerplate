@@ -1,20 +1,29 @@
 (ns super-dice-roll.discord.interceptor
-  (:require [super-dice-roll.discord.security :as discord.security]))
+  (:require [parenthesin.logs :as logs]
+            [super-dice-roll.discord.security :as discord.security]))
+
+(defn try-verify-request
+  [public-key signature timestamp body]
+  (try
+    (discord.security/verify-request public-key timestamp body signature)
+    (catch Exception e
+      (logs/log :warn :invalid-signed-request
+                {:public-key public-key
+                 :timestamp timestamp
+                 :signature signature
+                 :error (.getMessage e)})
+      false)))
 
 (defn authentication-interceptor []
   {:name ::validate-request-interaction
    :enter (fn [ctx]
             (let [request (:request ctx)
                   {{:keys [config]} :components} request
-                  app-public-key (get-in config [:config :discord :app-public-key])
-                  x-signature-ed25519 (get-in ctx [:request :headers "x-signature-ed25519"])
-                  x-signature-timestamp (get-in ctx [:request :headers "x-signature-timestamp"])
-                  raw-body (slurp (:raw-body ctx))
-                  is-valid-request? (discord.security/verify-request app-public-key
-                                                                     x-signature-timestamp
-                                                                     raw-body
-                                                                     x-signature-ed25519)]
-              (if is-valid-request?
+                  public-key (get-in config [:config :discord :app-public-key])
+                  signature (get-in ctx [:request :headers "x-signature-ed25519"])
+                  timestamp (get-in ctx [:request :headers "x-signature-timestamp"])
+                  raw-body (slurp (:raw-body ctx))]
+              (if (try-verify-request public-key signature timestamp raw-body)
                 ctx
                 (assoc ctx :response {:headers {"Content-Type" "application/text"}
                                       :status 401
