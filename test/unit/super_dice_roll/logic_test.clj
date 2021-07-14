@@ -8,7 +8,7 @@
 
 (use-fixtures :once schema.test/validate-schemas)
 
-(defn ->cmd [command]
+(defn- ->cmd [command]
   (assoc
    (g/generate schemas.models/RollCommand)
     :command command))
@@ -22,4 +22,3 @@
       "15d4-5" {:times 15 :dice 04 :modifier -5}
       "wololo" {:times 01 :dice 00 :modifier  0}
       ""       {:times 01 :dice 00 :modifier  0})))
-

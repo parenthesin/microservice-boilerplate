@@ -9,8 +9,7 @@
     (catch Exception _
       arg)))
 
-(defn- parse-first-part
-  [command]
+(defn- parse-first-part [command]
   (-> command
       string/upper-case
       (string/split #"D")))
@@ -21,8 +20,7 @@
     {:dice (-> parsed first (int-or-arg 0))
      :modifier (-> parsed last not-empty (or 0) Integer/parseInt (* sign))}))
 
-(defn- parse-second-part
-  [command]
+(defn- parse-second-part [command]
   (cond
     (string/index-of command \+) (parse-modifiers command \+)
     (string/index-of command \-) (parse-modifiers command \-)
