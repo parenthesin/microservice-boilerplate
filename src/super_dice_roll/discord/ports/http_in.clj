@@ -1,24 +1,34 @@
 (ns super-dice-roll.discord.ports.http-in
-  (:require [parenthesin.logs :as logs]
+  (:require [clojure.string :as string]
+            [parenthesin.logs :as logs]
             [schema.core :as s]
             [super-dice-roll.discord.adapters :as adapters]
+            [super-dice-roll.discord.controllers :as discord.controller]
             [super-dice-roll.discord.schemas.http-in :as discord.schemas.http-in]
             [super-dice-roll.schemas.types :as schemas.types]))
 
 (s/defn temporary-roll-command->zoeira
-  [{:keys [user command]}]
-  (str "Fala mano bronkx " (if (empty? (:nick user)) (:username user) (:nick user)) "\n"
-       "já lhe estou lhe reconhecendo mermão, \n"
-       "porém *ainda* não sei fazer nada ainda **parsa!** \n"
-       "Mas assim parece bem maneiro esse tal de \"" command "\""))
+  [{:keys [roll total results]}]
+  (let [{:keys [nick username]} (get-in roll [:command :user])
+        command (get-in roll [:command :command])]
+    (str "Fala mano bronkx " (if (empty? nick) username nick) "\n"
+         "já lhe estou lhe reconhecendo mermão, \n"
+         "hummmmm... \"" command "\", *rolou dado pra caralho eim...* \n"
+         (string/join "," results) " num **total de " total "**\n")))
 
 (s/defn application-command-handler!
   [body :- discord.schemas.http-in/InteractionRequest
-   _components :- schemas.types/Components]
-  (let [roll-command (adapters/wire-in->model body)]
-    {:status 200
-     :body {:type 4
-            :data {:content (temporary-roll-command->zoeira roll-command)}}}))
+   components :- schemas.types/Components]
+  (let [rolled (-> body
+                   adapters/wire-in->model
+                   (discord.controller/do-roll! components))]
+    (if rolled
+      {:status 200
+       :body {:type 4
+              :data {:content (temporary-roll-command->zoeira rolled)}}}
+      {:status 200
+       :body {:type 4
+              :data {:content "Errou! Vish... digita /help ai trouxa!"}}})))
 
 (defn process-interaction!
   [{{{:keys [type] :as body} :body
