@@ -1,4 +1,4 @@
-(ns super-dice-roll.logic
+(ns super-dice-roll.logics
   (:require [clojure.string :as string]
             [schema.core :as s]
             [super-dice-roll.schemas.models :as schemas.models]))
@@ -32,3 +32,10 @@
         second-part (parse-second-part (last first-part))
         times (-> first-part first (int-or-arg 1))]
     (merge {:command roll-command :times times} second-part)))
+
+(s/defn valid-roll? :- s/Bool
+  [{:keys [times dice]} :- schemas.models/Roll]
+  (and (> dice 0)
+       (<= dice 1000)
+       (> times 0)
+       (<= times 100)))

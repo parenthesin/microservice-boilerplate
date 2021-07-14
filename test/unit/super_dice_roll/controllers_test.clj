@@ -2,20 +2,9 @@
   (:require [clojure.test :refer [are deftest testing]]
             [matcher-combinators.matchers :as m]
             [matcher-combinators.test :refer [match?]]
-            [schema-generators.generators :as g]
             [super-dice-roll.controllers :as controllers]
-            [super-dice-roll.schemas.models :as schemas.models]))
+            [unit.super-dice-roll.utils :refer [->roll in-range?]]))
 
-(defn- ->roll [roll]
-  (merge
-   (g/generate schemas.models/Roll)
-   roll))
-
-(defn- in-range?
-  ([maximum]
-   (in-range? 1 maximum))
-  ([minimun maximum]
-   (fn [value] (and (>= value minimun) (<= value maximum)))))
 
 (deftest roll->rolled-test
   (testing "should roll dices parsed commands and sum results in total"
