@@ -1,34 +1,28 @@
 (ns super-dice-roll.discord.ports.http-in
-  (:require [clojure.string :as string]
-            [parenthesin.logs :as logs]
+  (:require [parenthesin.logs :as logs]
             [schema.core :as s]
             [super-dice-roll.discord.adapters :as adapters]
             [super-dice-roll.discord.controllers :as discord.controller]
             [super-dice-roll.discord.schemas.http-in :as discord.schemas.http-in]
+            [super-dice-roll.messages :as messages]
             [super-dice-roll.schemas.types :as schemas.types]))
-
-(s/defn temporary-roll-command->zoeira
-  [{:keys [roll total results]}]
-  (let [{:keys [nick username]} (get-in roll [:command :user])
-        command (get-in roll [:command :command])]
-    (str "Fala mano bronkx " (if (empty? nick) username nick) "\n"
-         "já lhe estou lhe reconhecendo mermão, \n"
-         "hummmmm... \"" command "\", *rolou dado pra caralho eim...* \n"
-         (string/join "," results) " num **total de " total "**\n")))
 
 (s/defn application-command-handler!
   [body :- discord.schemas.http-in/InteractionRequest
    components :- schemas.types/Components]
-  (let [rolled (-> body
-                   adapters/wire-in->model
-                   (discord.controller/do-roll! components))]
-    (if rolled
-      {:status 200
-       :body {:type 4
-              :data {:content (temporary-roll-command->zoeira rolled)}}}
-      {:status 200
-       :body {:type 4
-              :data {:content "Errou! Vish... digita /help ai trouxa!"}}})))
+  (let [slash-cmd (get-in body [:data :name])
+        roll-cmd (adapters/wire-in->model body)
+        content (case slash-cmd
+                  "roll" (if-let [rolled (discord.controller/do-roll! roll-cmd components)]
+                           (adapters/rolled->message rolled)
+                           (adapters/roll-command->error-message roll-cmd))
+                  "history" "Command not available."
+                  "help" (str messages/help-header "\n"
+                              messages/help-roll "\n"
+                              messages/help-history))]
+    {:status 200
+     :body {:type 4
+            :data {:content content}}}))
 
 (defn process-interaction!
   [{{{:keys [type] :as body} :body
@@ -41,5 +35,4 @@
     2 (application-command-handler! body components)
     {:status 200
      :body {:type 4
-            :data {:content (str "Unknown command, try one of the following **slash commands**: \n"
-                                 "`/roll`, `/history` or `/help`.")}}}))
+            :data {:content (str "Unknown command. " messages/help-header)}}}))
