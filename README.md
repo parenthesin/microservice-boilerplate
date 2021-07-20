@@ -133,9 +133,9 @@ java -jar service.jar
 │   └── workflows -- Github workflows folder.
 ├── docker -- docker and docker-compose files for the database
 ├── resources -- Application resources assets folder and configuration files.
+│   └── migrations -- Current database schemas, synced on service startup.
 ├── src -- Library source code and headers.
 │   ├── parenthesin -- Source for common utilities and helpers.
-│   ├── migrations -- Current database schemas, synced on service startup.
 │   └── microservice_boilerplate -- Source for the service example (wallet).
 └── test -- Test source code.
     ├── integration -- Integration tests source (uses state-flow).

@@ -57,7 +57,7 @@
 
     (flow "prepare system with http-out mocks and creating tables"
       (util.http/set-http-out-responses! {"http://coinbase.org" {:body {:rate 35000.0M}
-                                                                :status 200}})
+                                                                 :status 200}})
 
       (util.database/execute! ["create table if not exists wallet (
                                   id serial primary key,
@@ -67,12 +67,12 @@
         (match? {:status 201
                  :body {:usd 70000.0}}
                 (util.webserver/request! {:method :post
-                                         :uri    "/wallet/deposit"
-                                         :body   {:btc 2M}})))
+                                          :uri    "/wallet/deposit"
+                                          :body   {:btc 2M}})))
 
       (flow "should list wallet deposits"
         (match? {:status 200
                  :body [{:id 1
                          :amount 70000.0}]}
                 (util.webserver/request! {:method :get
-                                         :uri    "/wallet/list"}))))))
+                                          :uri    "/wallet/list"}))))))

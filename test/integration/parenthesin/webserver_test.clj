@@ -35,11 +35,11 @@
       (match? {:status 200
                :body {:total 7}}
               (util.webserver/request! {:method  :get
-                                       :uri     (str "/plus?x=" 3 "&y=" 4)})))
+                                        :uri     (str "/plus?x=" 3 "&y=" 4)})))
     (flow "should sum the body x & y via post"
       (match? {:status 200
                :body {:total 7}}
               (util.webserver/request! {:method  :post
-                                       :uri     "/plus"
-                                       :body    {:x 4
-                                                 :y 3}})))))
+                                        :uri     "/plus"
+                                        :body    {:x 4
+                                                  :y 3}})))))
