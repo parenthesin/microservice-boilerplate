@@ -38,8 +38,8 @@
 
     (flow "prepare system with http-out mocks"
       (util.http/set-http-out-responses! {"https://api.coindesk.com/v1/bpi/currentprice.json"
-                                         {:body {:bpi {:USD {:rate_float 30000.00}}}
-                                          :status 200}})
+                                          {:body {:bpi {:USD {:rate_float 30000.00}}}
+                                           :status 200}})
 
       (flow "should insert deposit into wallet"
         (match? (matchers/embeds {:status 201
@@ -47,8 +47,8 @@
                                           :btc-amount 2
                                           :usd-amount-at 60000.0}})
                 (util.webserver/request! {:method :post
-                                         :uri    "/wallet/deposit"
-                                         :body   {:btc 2M}})))
+                                          :uri    "/wallet/deposit"
+                                          :body   {:btc 2M}})))
 
       (flow "should insert withdrawal into wallet"
         (match? (matchers/embeds {:status 201
@@ -56,29 +56,29 @@
                                           :btc-amount -1
                                           :usd-amount-at -30000.0}})
                 (util.webserver/request! {:method :post
-                                         :uri    "/wallet/withdrawal"
-                                         :body   {:btc -1M}})))
+                                          :uri    "/wallet/withdrawal"
+                                          :body   {:btc -1M}})))
 
       (flow "shouldn't insert deposit negative values into wallet"
         (match? {:status 400
                  :body  "btc deposit amount can't be negative."}
                 (util.webserver/request! {:method :post
-                                         :uri    "/wallet/deposit"
-                                         :body   {:btc -2M}})))
+                                          :uri    "/wallet/deposit"
+                                          :body   {:btc -2M}})))
 
       (flow "shouldn't insert withdrawal positive values into wallet"
         (match? {:status 400
                  :body  "btc withdrawal amount can't be positive."}
                 (util.webserver/request! {:method :post
-                                         :uri    "/wallet/withdrawal"
-                                         :body   {:btc 2M}})))
+                                          :uri    "/wallet/withdrawal"
+                                          :body   {:btc 2M}})))
 
       (flow "shouldn't insert withdrawal into wallet"
         (match? {:status 400
                  :body  "withdrawal amount bigger than the total in the wallet."}
                 (util.webserver/request! {:method :post
-                                         :uri    "/wallet/withdrawal"
-                                         :body   {:btc -2M}})))
+                                          :uri    "/wallet/withdrawal"
+                                          :body   {:btc -2M}})))
 
       (flow "should list wallet deposits"
         (match? (matchers/embeds {:status 200
@@ -93,4 +93,4 @@
                                          :total-btc 1
                                          :total-current-usd 30000.0}})
                 (util.webserver/request! {:method :get
-                                         :uri    "/wallet/history"}))))))
+                                          :uri    "/wallet/history"}))))))
