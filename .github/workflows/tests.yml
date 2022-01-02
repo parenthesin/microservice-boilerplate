@@ -77,5 +77,8 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/deps.edn') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Execute clojure code
-        run: clojure -M:lint
+      - name: Execute lint checks
+        run: |
+          clojure -M:clojure-lsp format --dry
+          clojure -M:clojure-lsp clean-ns --dry
+          clojure -M:clojure-lsp diagnostics

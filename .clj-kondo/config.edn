@@ -1,11 +1,11 @@
-{:hooks {:analyze-call {integration.microservice-boilerplate.aux/init-flow nubank.state-flow/defflow
-                        state-flow.api/defflow nubank.state-flow/defflow
-                        state-flow.cljtest/defflow nubank.state-flow/defflow
-                        state-flow.core/flow nubank.state-flow/flow
-                        state-flow.api/flow nubank.state-flow/flow}}
+{:config-paths ["com.github.seancorfield/next.jdbc"
+                "nubank/state-flow"
+                "marick/midje"]
+ :hooks {:analyze-call {integration.microservice-boilerplate.aux/init-flow nubank.state-flow/defflow
+                        state-flow.api/defflow nubank.state-flow/defflow}}
  :linters {:unsorted-required-namespaces {:level :warning}
            :unresolved-var {:exclude [honeysql.helpers/select
                                       honeysql.helpers/from]}}
  :lint-as {honeysql.helpers/defhelper clj-kondo.lint-as/def-catch-all
            clojure.test.check.properties/for-all clojure.core/let
-           clojure.test.check.clojure-test/defspec clojure.core/def}}
+           clojure.test.check.clojure-test/defspec clojure.test/deftest}}

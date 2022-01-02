@@ -31,13 +31,8 @@
                        nubank/state-flow {:mvn/version "5.14.0"}}
          :main-opts   ["-m" "kaocha.runner"]}
 
-  :lint {:extra-paths ["test"]
-         :extra-deps {clj-kondo/clj-kondo {:mvn/version "2021.12.19"}}
-         :main-opts ["-m" "clj-kondo.main" "--lint" "src" "--lint" "test"]}
-
-  :lint-fix {:extra-paths ["test"]
-             :extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
-             :main-opts ["-m" "cljfmt.main" "fix" "src" "test" "--indents" "indentation.edn"]}
+  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp {:mvn/version "2021.12.20-00.36.56"}}
+                :main-opts ["-m" "clojure-lsp.main"]}
 
   :migratus {:main-opts ["-m" "parenthesin.migrations"]}
 
