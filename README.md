@@ -146,6 +146,14 @@ java -jar service.jar
         └── microservice_boilerplate -- Tests for service example (wallet).
 ```
 
+## Related
+
+### Similar Projects
+- https://github.com/vloth/ts-microservice-boilerplate
+
+### Projects Using this Template
+- https://github.com/rafaeldelboni/super-dice-roll-clj
+
 ## License
 This is free and unencumbered software released into the public domain.  
 For more information, please refer to <http://unlicense.org>
