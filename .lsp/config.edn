@@ -1,4 +1,5 @@
-{:cljfmt {:indents {mlet                    [[:block 1]]
+{:clean {:ns-inner-blocks-indentation :same-line}
+ :cljfmt {:indents {mlet                    [[:block 1]]
                     facts                   [[:block 1]]
                     fact                    [[:block 1]]
                     flow                    [[:block 1]]
