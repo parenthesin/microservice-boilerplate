@@ -43,14 +43,12 @@ To generate a coverage report
 clj -M:test --plugin kaocha.plugin/cloverage
 ```
 
-## Lint
-Auto code format
+## Lint fix and format
+
 ```bash
-clj -M:lint-fix
-```
-Runs kondo to lint src/test files
-```bash
-clj -M:lint
+clj -M:clojure-lsp format
+clj -M:clojure-lsp clean-ns
+clj -M:clojure-lsp diagnostics
 ```
 
 ## Migrations
