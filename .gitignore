@@ -5,13 +5,12 @@
 .clj-kondo/.cache
 .cpcache
 .eastwood
-.lsp
+.lsp/.cache
 .nrepl-port
 .project
 /.cpcache
 /.eastwood
 /.lein-*
-/.lsp
 /.nrepl-history
 /.nrepl-port
 /.rebel_readline_history
