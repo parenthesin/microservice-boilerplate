@@ -111,17 +111,14 @@ java -jar service.jar
 - [honeysql](https://github.com/seancorfield/honeysql) SQL as Clojure data structures
 - [depstar](https://github.com/seancorfield/depstar) Generates Uberjars for releases
 
-### Tests
+### Tests & Checks
 - [kaocha](https://github.com/lambdaisland/kaocha) Test runner
 - [kaocha-cloverage](https://github.com/lambdaisland/kaocha-cloverage) Kaocha plugin for code coverage reports
 - [schema-generators](https://github.com/plumatic/schema-generators) Data generation and generative testing
 - [state-flow](https://github.com/nubank/state-flow) Testing framework for integration tests
 - [matcher-combinators](https://github.com/nubank/matcher-combinators) Assertions in data structures
 - [pg-embedded-clj](https://github.com/Bigsy/pg-embedded-clj) Embedded PostgreSQL for integration tests
-
-### Linting
-- [clj-kondo](https://github.com/clj-kondo/clj-kondo) Code linter
-- [cljfmt](https://github.com/weavejester/cljfmt) Auto code formatting
+- [clojure-lsp](https://github.com/clojure-lsp/clojure-lsp/) Code Format, Namespace Check and Diagnosis
 
 ## Directory Structure
 ```
@@ -147,10 +144,10 @@ java -jar service.jar
 ## Related
 
 ### Similar Projects
-- https://github.com/vloth/ts-microservice-boilerplate
+- [vloth/ts-microservice-boilerplate](https://github.com/vloth/ts-microservice-boilerplate)
 
-### Projects Using this Template
-- https://github.com/rafaeldelboni/super-dice-roll-clj
+### Using this Template
+- [rafaeldelboni/super-dice-roll-clj](https://github.com/rafaeldelboni/super-dice-roll-clj)
 
 ## License
 This is free and unencumbered software released into the public domain.  
