@@ -8,7 +8,7 @@
         com.github.seancorfield/next.jdbc {:mvn/version "1.2.761"}
         com.stuartsierra/component {:mvn/version "1.0.0"}
         com.taoensso/timbre {:mvn/version "5.1.2"}
-        com.zaxxer/HikariCP {:mvn/version "5.0.0"}
+        com.zaxxer/HikariCP {:mvn/version "5.0.1"}
         io.pedestal/pedestal.jetty  {:mvn/version "0.5.9"}
         io.pedestal/pedestal.service  {:mvn/version "0.5.9"}
         metosin/muuntaja {:mvn/version "0.6.8"}
@@ -31,7 +31,7 @@
                        nubank/state-flow {:mvn/version "5.14.0"}}
          :main-opts   ["-m" "kaocha.runner"]}
 
-  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp {:mvn/version "2021.12.20-00.36.56"}}
+  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp {:mvn/version "2022.01.03-19.46.10"}}
                 :main-opts ["-m" "clojure-lsp.main"]}
 
   :migratus {:main-opts ["-m" "parenthesin.migrations"]}
@@ -42,5 +42,5 @@
                         :aot true
                         :main-class microservice-boilerplate.server}}
 
-  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.27.4"}}
+  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.28.0"}}
           :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}}}
