@@ -35,7 +35,7 @@ jobs:
       - name: Install clojure tools-deps
         uses: DeLaGuardo/setup-clojure@master
         with:
-          tools-deps: 1.10.3.1053
+          tools-deps: 1.10.3.1058
 
       - name: Cache Maven packages
         uses: actions/cache@v2.1.7
@@ -68,7 +68,7 @@ jobs:
       - name: Install clojure tools-deps
         uses: DeLaGuardo/setup-clojure@master
         with:
-          tools-deps: 1.10.3.1053
+          tools-deps: 1.10.3.1058
 
       - name: Cache Maven packages
         uses: actions/cache@v2.1.7
