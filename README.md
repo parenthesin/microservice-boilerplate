@@ -146,6 +146,9 @@ java -jar service.jar
 ### Similar Projects
 - [vloth/ts-microservice-boilerplate](https://github.com/vloth/ts-microservice-boilerplate)
 
+### Forks
+- [parenthesin/microservice-boilerplate-malli](https://github.com/parenthesin/microservice-boilerplate-malli)
+
 ### Using this Template
 - [rafaeldelboni/super-dice-roll-clj](https://github.com/rafaeldelboni/super-dice-roll-clj)
 
