@@ -3,8 +3,6 @@ name: Tests
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -24,21 +22,21 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Prepare java
-        uses: actions/setup-java@v2.5.0
+        uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Install clojure tools-deps
+      - name: Install clojure cli
         uses: DeLaGuardo/setup-clojure@master
         with:
-          tools-deps: 1.10.3.1058
+          cli: 1.11.1.1149
 
       - name: Cache Maven packages
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/deps.edn') }}
@@ -57,31 +55,23 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Prepare java
-        uses: actions/setup-java@v2.5.0
-        with:
-          distribution: 'adopt'
-          java-version: '11'
-
-      - name: Install clojure tools-deps
+      - name: Install clojure cli
         uses: DeLaGuardo/setup-clojure@master
         with:
-          tools-deps: 1.10.3.1058
+          cli: 1.11.1.1149
 
-      - name: Cache Maven packages
-        uses: actions/cache@v2.1.7
+      - name: Setup clojure-lsp
+        uses: clojure-lsp/setup-clojure-lsp@v1
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/deps.edn') }}
-          restore-keys: ${{ runner.os }}-m2
+          clojure-lsp-version: 2022.06.29-19.32.13
 
       - name: Execute lint checks
         run: |
-          clojure -M:clojure-lsp format --dry
-          clojure -M:clojure-lsp clean-ns --dry
-          clojure -M:clojure-lsp diagnostics
+          clojure-lsp format --dry
+          clojure-lsp clean-ns --dry
+          clojure-lsp diagnostics
 
   security:
 
@@ -93,7 +83,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Scan
         uses: clj-holmes/clj-holmes-action@main
