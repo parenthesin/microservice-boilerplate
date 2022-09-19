@@ -65,7 +65,7 @@ jobs:
       - name: Setup clojure-lsp
         uses: clojure-lsp/setup-clojure-lsp@v1
         with:
-          clojure-lsp-version: 2022.06.29-19.32.13
+          clojure-lsp-version: 2022.09.01-15.27.31
 
       - name: Execute lint checks
         run: |
