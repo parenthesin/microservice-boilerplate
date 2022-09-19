@@ -1,6 +1,6 @@
 name: Tests
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   pull_request:
@@ -33,7 +33,7 @@ jobs:
       - name: Install clojure cli
         uses: DeLaGuardo/setup-clojure@master
         with:
-          cli: 1.11.1.1149
+          cli: 1.11.1.1165
 
       - name: Cache Maven packages
         uses: actions/cache@v3
@@ -60,7 +60,7 @@ jobs:
       - name: Install clojure cli
         uses: DeLaGuardo/setup-clojure@master
         with:
-          cli: 1.11.1.1149
+          cli: 1.11.1.1165
 
       - name: Setup clojure-lsp
         uses: clojure-lsp/setup-clojure-lsp@v1
