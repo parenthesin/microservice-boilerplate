@@ -18,8 +18,7 @@
         metosin/reitit-swagger-ui {:mvn/version "0.5.18"}
         migratus/migratus {:mvn/version "1.4.4"}
         org.postgresql/postgresql {:mvn/version "42.5.0"}
-        org.slf4j/slf4j-api {:mvn/version "2.0.1"}
-        org.xerial/sqlite-jdbc {:mvn/version "3.39.3.0"}
+        org.slf4j/slf4j-simple {:mvn/version "2.0.1"}
         prismatic/schema {:mvn/version "1.4.0"}
         prismatic/schema-generators {:mvn/version "0.1.5"}}
  :aliases
