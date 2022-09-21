@@ -1,7 +1,6 @@
 (ns parenthesin.components.http
-  (:require [clj-http.client :as http]
-            [clj-http.util :as http-util]
-            [com.stuartsierra.component :as component]
+  (:require [com.stuartsierra.component :as component]
+            [java-http-clj.core :as http]
             [parenthesin.logs :as logs]
             [schema.core :as s]))
 
@@ -11,15 +10,10 @@
    s/Any s/Any})
 
 (s/defn request-fn
-  [{:keys [url] :as req} :- HttpRequestInput
-   & [respond raise]]
-  (http/check-url! url)
-  (if (http-util/opt req :async)
-    (if (some nil? [respond raise])
-      (throw (IllegalArgumentException.
-              "If :async? is true, you must pass respond and raise"))
-      (http/request (dissoc req :respond :raise) respond raise))
-    (http/request req)))
+  [{:keys [url] :as req} :- HttpRequestInput]
+  (-> req
+      (assoc :uri url)
+      http/send))
 
 (defprotocol HttpProvider
   (request
