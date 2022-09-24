@@ -1,5 +1,5 @@
 # microservice-boilerplate
-Clojure Microservice Boilerplate: Components, Reitit, Pedestal, Schema, Postgresql and Tests
+Clojure Microservice Boilerplate: http-kit, java-http-clj, ruuter, interceptor, schema, postgresql and tests. Made to be compiled in GraalVM 
 
 ## About this example
 This source is a combination of two namespaces
@@ -93,7 +93,7 @@ You can generate an uberjar and execute it via java in the terminal:
 # genarate a service.jar in the root of this repository.
 clj -X:uberjar
 # execute it via java
-java -jar service.jar
+java -jar target/service.jar
 ```
 
 ## Features
@@ -101,15 +101,16 @@ java -jar service.jar
 ### System
 - [schema](https://github.com/plumatic/schema) Types and Schemas
 - [component](https://github.com/stuartsierra/component) System Lifecycle and Dependencies
-- [pedestal](https://github.com/pedestal/pedestal) Http Server
-- [reitit](https://github.com/metosin/reitit) Http Routes System 
-- [clj-http](https://github.com/dakrone/clj-http) Http Client
+- [http-kit](https://github.com/http-kit/http-kit) Http Server
+- [ruuter](https://github.com/askonomm/ruuter) Http Routes System 
+- [java-http-clj](https://github.com/schmee/java-http-clj) Http Client
+- [interceptor](https://github.com/exoscale/interceptor) Http Client
 - [cheshire](https://github.com/dakrone/cheshire) JSON encoding
 - [aero](https://github.com/juxt/aero) Configuration file and enviroment variables manager
 - [timbre](https://github.com/ptaoussanis/timbre) Logging library
 - [next-jdbc](https://github.com/seancorfield/next-jdbc) JDBC-based layer to access databases
 - [honeysql](https://github.com/seancorfield/honeysql) SQL as Clojure data structures
-- [depstar](https://github.com/seancorfield/depstar) Generates Uberjars for releases
+- [build-clj](https://github.com/seancorfield/build-clj) Common build tasks abstracted into a library
 
 ### Tests & Checks
 - [kaocha](https://github.com/lambdaisland/kaocha) Test runner
@@ -147,6 +148,7 @@ java -jar service.jar
 - [vloth/ts-microservice-boilerplate](https://github.com/vloth/ts-microservice-boilerplate)
 
 ### Forks
+- [parenthesin/microservice-boilerplate](https://github.com/parenthesin/microservice-boilerplate)
 - [parenthesin/microservice-boilerplate-malli](https://github.com/parenthesin/microservice-boilerplate-malli)
 
 ### Using this Template

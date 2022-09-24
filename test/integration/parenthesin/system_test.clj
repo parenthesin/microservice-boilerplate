@@ -1,11 +1,13 @@
 (ns integration.parenthesin.system-test
-  (:require [clojure.test :as clojure.test]
+  (:require [cheshire.core :as json]
+            [clojure.test :as clojure.test]
             [integration.parenthesin.util :as aux]
             [integration.parenthesin.util.database :as util.database]
             [integration.parenthesin.util.http :as util.http]
             [integration.parenthesin.util.webserver :as util.webserver]
             [parenthesin.components.database :as components.database]
             [parenthesin.components.http :as components.http]
+            [parenthesin.interceptors :as interceptors]
             [schema.core :as s]
             [schema.test :as schema.test]
             [state-flow.api :refer [defflow]]
@@ -15,10 +17,13 @@
 (clojure.test/use-fixtures :once schema.test/validate-schemas)
 
 (defn do-deposit!
-  [{{{:keys [btc]} :body} :parameters
+  [{{:keys [btc]} :body
     {:keys [http database]} :components}]
-  (let [response (components.http/request http {:url "http://coinbase.org" :method :get})
-        rate (get-in response [:body :rate])
+  (let [response (-> http
+                     (components.http/request {:url "http://coinbase.org" :method :get})
+                     :body
+                     (json/decode true))
+        rate (:rate response)
         price (* rate btc)]
     (components.database/execute database [(str "insert into wallet(price) values('" price "')")])
     {:status 201
@@ -34,19 +39,16 @@
                 wallet)}))
 
 (def test-routes
-  [["/wallet"
-    {:swagger {:tags ["wallet"]}}
-
-    ["/deposit"
-     {:post {:summary "deposit btc and return value in usd"
+  {:interceptors interceptors/base-interceptors
+   :routes [{:path "/wallet/deposit"
+             :method :post
              :parameters {:body {:btc s/Num}}
              :responses {201 {:body {:usd s/Num}}}
-             :handler do-deposit!}}]
-
-    ["/list"
-     {:get {:summary "list deposits in wallet"
-            :responses {200 {:body [{:id s/Int :amount BigDecimal}]}}
-            :handler get-wallet}}]]])
+             :handler do-deposit!}
+            {:path "/wallet/list"
+             :method :get
+             :responses {200 {:body [{:id s/Int :amount BigDecimal}]}}
+             :handler get-wallet}]})
 
 (defflow
   flow-integration-system-test
@@ -73,6 +75,6 @@
       (flow "should list wallet deposits"
         (match? {:status 200
                  :body [{:id 1
-                         :amount 70000.0}]}
+                         :amount 70000.0M}]}
                 (util.webserver/request! {:method :get
                                           :uri    "/wallet/list"}))))))

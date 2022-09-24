@@ -9,7 +9,7 @@
      :body (adapters/->wallet-history usd-price entries)}))
 
 (defn do-deposit!
-  [{{{:keys [btc]} :body} :parameters
+  [{{:keys [btc]} :body
     components :components}]
   (if (pos? btc)
     {:status 201
@@ -20,7 +20,7 @@
      :body "btc deposit amount can't be negative."}))
 
 (defn do-withdrawal!
-  [{{{:keys [btc]} :body} :parameters
+  [{{:keys [btc]} :body
     components :components}]
   (if (neg? btc)
     (if-let [withdrawal (controllers/do-withdrawal! btc components)]

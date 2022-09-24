@@ -8,24 +8,17 @@
         com.stuartsierra/component {:mvn/version "1.1.0"}
         com.taoensso/timbre {:mvn/version "5.2.1"}
         com.zaxxer/HikariCP {:mvn/version "5.0.1"}
-        io.pedestal/pedestal.jetty  {:mvn/version "0.5.10"}
-        io.pedestal/pedestal.service  {:mvn/version "0.5.10"}
-        metosin/muuntaja {:mvn/version "0.6.8"}
-        metosin/reitit {:mvn/version "0.5.18"}
-        metosin/reitit-pedestal {:mvn/version "0.5.18"}
-        metosin/reitit-swagger {:mvn/version "0.5.18"}
-        metosin/reitit-swagger-ui {:mvn/version "0.5.18"}
-        migratus/migratus {:mvn/version "1.4.4"}
-        org.postgresql/postgresql {:mvn/version "42.5.0"}
-        org.slf4j/slf4j-simple {:mvn/version "2.0.1"}
-        prismatic/schema {:mvn/version "1.4.0"}
-        prismatic/schema-generators {:mvn/version "0.1.5"}
-
         exoscale/interceptor {:mvn/version "0.1.14"}
         http-kit/http-kit {:mvn/version "2.7.0-alpha1"}
         java-http-clj/java-http-clj {:mvn/version "0.4.3"}
         metosin/schema-tools {:mvn/version "0.12.3"}
+        migratus/migratus {:mvn/version "1.4.4"}
         org.clojars.askonomm/ruuter {:mvn/version "1.2.2"}
+        org.postgresql/postgresql {:mvn/version "42.5.0"}
+        org.slf4j/slf4j-simple {:mvn/version "2.0.1"}
+        prismatic/schema {:mvn/version "1.4.0"}
+        prismatic/schema-generators {:mvn/version "0.1.5"}
+        ring/ring-codec {:mvn/version "1.2.0"}
         com.github.clj-easy/graal-build-time {:mvn/version "0.1.4"}}
  :aliases
  {:test {:extra-paths ["test"]
@@ -35,7 +28,8 @@
                        lambdaisland/kaocha {:mvn/version "1.70.1086"}
                        lambdaisland/kaocha-cloverage {:mvn/version "1.0.75"}
                        nubank/matcher-combinators {:mvn/version "3.5.1"}
-                       nubank/state-flow {:mvn/version "5.14.2"}}
+                       nubank/state-flow {:mvn/version "5.14.2"}
+                       ring/ring-mock {:mvn/version "0.4.0"}}
          :main-opts   ["-m" "kaocha.runner"]}
 
   :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp-standalone {:mvn/version "2022.09.01-15.27.31"}}
@@ -43,11 +37,12 @@
 
   :migratus {:main-opts ["-m" "parenthesin.migrations"]}
 
-  :uberjar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
-            :exec-fn hf.depstar/uberjar
-            :exec-args {:jar "service.jar"
-                        :aot true
-                        :main-class microservice-boilerplate.server}}
+  :uberjar {:deps {io.github.seancorfield/build-clj
+                   {:git/tag "v0.8.3" :git/sha "7ac1f8d"
+                    :deps/root "slim"}}
+            :exec-fn org.corfield.build/uber
+            :exec-args {:main microservice-boilerplate.server
+                        :uber-file "target/service.jar"}}
 
   :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.28.6"}}
           :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}}}

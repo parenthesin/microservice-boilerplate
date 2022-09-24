@@ -29,8 +29,25 @@
 
 (def DatabaseComponent (s/protocol components.database/DatabaseProvider))
 
+(s/validate {:fn (s/pred fn?)} {:fn #(%)})
+
+(def Route
+  {:path s/Str
+   :method s/Keyword
+   :handler (s/pred fn?)
+   (s/optional-key :summary) s/Str
+   (s/optional-key :parameters) s/Any
+   (s/optional-key :responses) s/Any})
+
+(def Interceptor
+  {:name s/Keyword
+   (s/optional-key :enter) (s/pred fn?)
+   (s/optional-key :leave) (s/pred fn?)
+   (s/optional-key :error) (s/pred fn?)})
+
 (s/defschema Components
   {:config (s/protocol component/Lifecycle)
    :http HttpComponent
-   :router (s/protocol component/Lifecycle)
-   :database DatabaseComponent})
+   :database DatabaseComponent
+   :routes [Route]
+   :interceptors [Interceptor]})

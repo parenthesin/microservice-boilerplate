@@ -2,6 +2,7 @@
   (:require [clojure.test :as clojure.test]
             [integration.parenthesin.util :as util]
             [integration.parenthesin.util.webserver :as util.webserver]
+            [parenthesin.interceptors :as interceptors]
             [schema.core :as s]
             [schema.test :as schema.test]
             [state-flow.api :refer [defflow]]
@@ -11,19 +12,23 @@
 (clojure.test/use-fixtures :once schema.test/validate-schemas)
 
 (def test-routes
-  [["/plus"
-    {:get {:summary "plus with spec query parameters"
-           :parameters {:query {:x s/Int, :y s/Int}}
-           :responses {200 {:body {:total s/Int}}}
-           :handler (fn [{{{:keys [x y]} :query} :parameters}]
-                      {:status 200
-                       :body {:total (+ x y)}})}
-     :post {:summary "plus with spec body parameters"
-            :parameters {:body {:x s/Int, :y s/Int}}
-            :responses {200 {:body {:total s/Int}}}
-            :handler (fn [{{{:keys [x y]} :body} :parameters}]
-                       {:status 200
-                        :body {:total (+ x y)}})}}]])
+  {:interceptors interceptors/base-interceptors
+   :routes [{:path "/plus"
+             :method :get
+             :summary "plus with spec query parameters"
+             :parameters {:query {:x s/Int, :y s/Int}}
+             :responses {200 {:body {:total s/Int}}}
+             :handler (fn [{{:keys [x y]} :query}]
+                        {:status 200
+                         :body {:total (+ x y)}})}
+            {:path "/plus"
+             :method :post
+             :summary "plus with spec body parameters"
+             :parameters {:body {:x s/Int, :y s/Int}}
+             :responses {200 {:body {:total s/Int}}}
+             :handler (fn [{{:keys [x y]} :body}]
+                        {:status 200
+                         :body {:total (+ x y)}})}]})
 
 (defflow
   flow-integration-webserver-test

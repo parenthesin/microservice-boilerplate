@@ -3,7 +3,6 @@
             [parenthesin.components.config :as components.config]
             [parenthesin.components.database :as components.database]
             [parenthesin.components.http :as components.http]
-            [parenthesin.components.router :as components.router]
             [parenthesin.components.webserver :as components.webserver]
             [parenthesin.logs :as logs]
             [pg-embedded-clj.core :as pg-emb]))
@@ -13,11 +12,10 @@
    (component/system-map
     :config (components.config/new-config)
     :http (components.http/new-http-mock {})
-    :router (components.router/new-router routes)
     :database (component/using (components.database/new-database)
                                [:config])
-    :webserver (component/using (components.webserver/new-webserver)
-                                [:config :http :router :database]))))
+    :webserver (component/using (components.webserver/new-webserver routes)
+                                [:config :http :database]))))
 
 (defn start-system!
   ([]
