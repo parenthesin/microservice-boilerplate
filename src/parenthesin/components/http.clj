@@ -37,7 +37,7 @@
     (let [start-time (System/currentTimeMillis)
           {:keys [status] :as response} (request-fn request-input)
           end-time (System/currentTimeMillis)
-          total-time (- start-time end-time)]
+          total-time (- end-time start-time)]
       (logs/log :info :http-out-message-response :response-time-millis total-time
                 :status status)
       response)))
