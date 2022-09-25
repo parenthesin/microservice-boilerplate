@@ -93,7 +93,7 @@ You can generate an uberjar and execute it via java in the terminal:
 # genarate a service.jar in the root of this repository.
 clj -X:uberjar
 # execute it via java
-java -jar service.jar
+java -jar target/service.jar
 ```
 
 ## Features
