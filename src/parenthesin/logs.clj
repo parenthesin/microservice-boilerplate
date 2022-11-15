@@ -9,5 +9,5 @@
     {:println
      (core-appenders/println-appender {:stream stream})}}))
 
-(defn log [level & args]
-  (timbre/log level args))
+(defmacro log [level & args]
+  `(timbre/log! ~level :p ~args ~{:?line (:line (meta &form))}))
