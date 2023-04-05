@@ -2,5 +2,4 @@
  {:tests   [{:id         :unit
              :test-paths ["test/unit"]}
             {:id         :integration
-             :test-paths ["test/integration"]}]
-  :reporter kaocha.report/tap}
+             :test-paths ["test/integration"]}]}
