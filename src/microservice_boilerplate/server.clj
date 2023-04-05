@@ -21,7 +21,7 @@
    :webserver (component/using (webserver/new-webserver) [:config :http :router :database])))
 
 (defn start-system! [system-map]
-  (logs/setup [["*" :info]] :auto)
+  (logs/setup :info :auto)
   (migrations/migrate (migrations/configuration-with-db))
   (->> system-map
        component/start

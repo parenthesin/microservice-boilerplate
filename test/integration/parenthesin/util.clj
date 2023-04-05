@@ -23,7 +23,7 @@
   ([]
    (start-system! []))
   ([routes]
-   (logs/setup [["*" :debug]] :auto)
+   (logs/setup :debug :auto)
    (pg-emb/init-pg)
    (create-and-start-components! routes)))
 
