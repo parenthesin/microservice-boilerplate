@@ -1,8 +1,8 @@
 (ns microservice-boilerplate.schemas.types
   (:require [clojure.test.check.generators :as generators]
             [com.stuartsierra.component :as component]
-            [parenthesin.components.database :as components.database]
-            [parenthesin.components.http :as components.http]
+            [parenthesin.components.db.jdbc-hikari :as components.db]
+            [parenthesin.components.http.clj-http :as components.http]
             [schema.core :as s]))
 
 (def PositiveNumber
@@ -27,7 +27,7 @@
 
 (def HttpComponent (s/protocol components.http/HttpProvider))
 
-(def DatabaseComponent (s/protocol components.database/DatabaseProvider))
+(def DatabaseComponent (s/protocol components.db/DatabaseProvider))
 
 (s/defschema Components
   {:config (s/protocol component/Lifecycle)
