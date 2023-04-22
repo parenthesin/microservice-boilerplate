@@ -2,12 +2,11 @@
 Clojure Microservice Boilerplate: Components, Reitit, Pedestal, Schema, Postgresql and Tests
 
 ## About this example
-This source is a combination of two namespaces
-
- - **parenthesin**: Helpers and wrappers to give a foundation to create new services in clojure,
-you can find components for database, http, webserver and tools for db migrations.
  - **microservice-boilerplate**: An example of how use the boilerplate, it's a simple btc wallet
 that fetch the current btc price in USD and you can check your transaction history, do deposits and withdrawals.
+
+- [parenthesin/components](https://github.com/parenthesin/components): Helpers and component wrappers to give a foundation to create new services in clojure,
+you can find components for database, http, webserver and tools for db migrations.
 
 Verb | URL                | Description
 -----| ------------------ | ------------------------------------------------
@@ -109,7 +108,6 @@ java -jar target/service.jar
 - [timbre](https://github.com/ptaoussanis/timbre) Logging library
 - [next-jdbc](https://github.com/seancorfield/next-jdbc) JDBC-based layer to access databases
 - [honeysql](https://github.com/seancorfield/honeysql) SQL as Clojure data structures
-- [depstar](https://github.com/seancorfield/depstar) Generates Uberjars for releases
 
 ### Tests & Checks
 - [kaocha](https://github.com/lambdaisland/kaocha) Test runner
@@ -124,20 +122,18 @@ java -jar target/service.jar
 ```
 ./
 ├── .clj-kondo -- clj-kondo configuration and classes
+├── .lsp -- clojure-lsp configuration
 ├── .github
 │   └── workflows -- Github workflows folder.
 ├── docker -- docker and docker-compose files for the database
 ├── resources -- Application resources assets folder and configuration files.
 │   └── migrations -- Current database schemas, synced on service startup.
 ├── src -- Library source code and headers.
-│   ├── parenthesin -- Source for common utilities and helpers.
 │   └── microservice_boilerplate -- Source for the service example (wallet).
 └── test -- Test source code.
     ├── integration -- Integration tests source (uses state-flow).
-    │   ├── parenthesin -- Tests for common utilities and helpers.
     │   └── microservice_boilerplate -- Tests for service example (wallet).
     └── unit -- Unity tests source (uses clojure.test).
-        ├── parenthesin -- Tests for common utilities.
         └── microservice_boilerplate -- Tests for service example (wallet).
 ```
 

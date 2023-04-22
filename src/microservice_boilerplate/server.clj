@@ -1,13 +1,13 @@
 (ns microservice-boilerplate.server
   (:require [com.stuartsierra.component :as component]
             [microservice-boilerplate.routes :as routes]
-            [parenthesin.components.config :as config]
-            [parenthesin.components.database :as database]
-            [parenthesin.components.http :as http]
-            [parenthesin.components.router :as router]
-            [parenthesin.components.webserver :as webserver]
-            [parenthesin.logs :as logs]
-            [parenthesin.migrations :as migrations])
+            [parenthesin.components.config.aero :as config]
+            [parenthesin.components.db.jdbc-hikari :as database]
+            [parenthesin.components.http.clj-http :as http]
+            [parenthesin.components.router.reitit-schema :as router]
+            [parenthesin.components.server.reitit-pedestal-jetty :as webserver]
+            [parenthesin.helpers.logs :as logs]
+            [parenthesin.helpers.migrations :as migrations])
   (:gen-class))
 
 (def system-atom (atom nil))
