@@ -89,7 +89,7 @@ You can start a repl open and evaluate the file `src/microservice_boilerplate/se
 ### Uberjar
 You can generate an uberjar and execute it via java in the terminal:
 ```bash
-# genarate a service.jar in the root of this repository.
+# genarate a target/service.jar
 clj -T:build uberjar
 # execute it via java
 java -jar target/service.jar
