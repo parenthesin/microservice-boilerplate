@@ -90,7 +90,7 @@ You can start a repl open and evaluate the file `src/microservice_boilerplate/se
 You can generate an uberjar and execute it via java in the terminal:
 ```bash
 # genarate a service.jar in the root of this repository.
-clj -X:uberjar
+clj -T:build uberjar
 # execute it via java
 java -jar target/service.jar
 ```
@@ -107,7 +107,8 @@ java -jar target/service.jar
 - [aero](https://github.com/juxt/aero) Configuration file and enviroment variables manager
 - [timbre](https://github.com/ptaoussanis/timbre) Logging library
 - [next-jdbc](https://github.com/seancorfield/next-jdbc) JDBC-based layer to access databases
-- [honeysql](https://github.com/seancorfield/honeysql) SQL as Clojure data structures
+- [hikaricp](https://github.com/brettwooldridge/HikariCP) A solid, high-performance, JDBC connection pool at last
+- [tools.build](https://github.com/clojure/tools.build) Clojure builds as Clojure programs
 
 ### Tests & Checks
 - [kaocha](https://github.com/lambdaisland/kaocha) Test runner
