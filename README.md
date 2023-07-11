@@ -57,7 +57,7 @@ clj -M:migratus create migration-name
 ```
 To execute all pending migrations
 ```bash
-clj -M:migratus migration
+clj -M:migratus migrate
 ```
 To rollback the latest migration
 ```bash
