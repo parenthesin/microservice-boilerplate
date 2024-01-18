@@ -22,10 +22,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Prepare java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'adopt'
           java-version: '11'
@@ -33,10 +33,10 @@ jobs:
       - name: Install clojure cli
         uses: DeLaGuardo/setup-clojure@master
         with:
-          cli: 1.11.1.1273
+          cli: 1.11.1.1435
 
       - name: Cache Maven packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/deps.edn') }}
@@ -55,12 +55,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install clojure cli
         uses: DeLaGuardo/setup-clojure@master
         with:
-          cli: 1.11.1.1273
+          cli: 1.11.1.1435
 
       - name: Setup clojure-lsp
         uses: clojure-lsp/setup-clojure-lsp@v1
@@ -83,7 +83,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Scan
         uses: clj-holmes/clj-holmes-action@main

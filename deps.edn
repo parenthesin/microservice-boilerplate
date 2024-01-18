@@ -1,31 +1,31 @@
 {:paths ["src" "resources"]
 
  :deps {org.clojure/clojure {:mvn/version "1.11.1"}
-        com.github.parenthesin/components {:mvn/version "0.2.0"
+        com.github.parenthesin/components {:mvn/version "0.2.3"
                                            :exclusions  [metosin/malli]}
-        com.github.seancorfield/honeysql {:mvn/version "2.4.1045"}
+        com.github.seancorfield/honeysql {:mvn/version "2.5.1103"}
         metosin/reitit-swagger {:mvn/version "0.6.0"}
-        org.postgresql/postgresql {:mvn/version "42.6.0"}
+        org.postgresql/postgresql {:mvn/version "42.7.1"}
         prismatic/schema {:mvn/version "1.4.1"}
         prismatic/schema-generators {:mvn/version "0.1.5"}}
 
  :aliases
  {:test {:extra-paths ["test"]
-         :extra-deps  {org.clojars.bigsy/pg-embedded-clj {:mvn/version "1.0.0"}
-                       lambdaisland/kaocha {:mvn/version "1.85.1342"}
+         :extra-deps  {org.clojars.bigsy/pg-embedded-clj {:mvn/version "1.0.1"}
+                       lambdaisland/kaocha {:mvn/version "1.87.1366"}
                        lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}
-                       nubank/matcher-combinators {:mvn/version "3.8.5"}
-                       nubank/state-flow {:mvn/version "5.14.4"}}
+                       nubank/matcher-combinators {:mvn/version "3.8.8"}
+                       nubank/state-flow {:mvn/version "5.14.5"}}
          :main-opts   ["-m" "kaocha.runner"]}
 
-  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp-standalone {:mvn/version "2023.07.01-22.35.41"}}
+  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp-standalone {:mvn/version "2023.12.29-12.09.27"}}
                 :main-opts ["-m" "clojure-lsp.main"]}
 
-  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.31.0"}}
+  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.45.0"}}
           :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}
 
   :migratus {:main-opts ["-m" "parenthesin.helpers.migrations"]}
 
-  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.4"}}
+  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.6"}}
           :ns-default build
           :exec-args {:uber-file "target/service.jar"}}}}
