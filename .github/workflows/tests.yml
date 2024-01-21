@@ -94,5 +94,7 @@ jobs:
       - name: Security Dependency Scan
         uses: clj-holmes/clj-watson-action@main
         with:
+          clj-watson-sha: "ad5fe07"
+          clj-watson-tag: "v5.1.1"
           output-type: 'stdout'
           fail-on-result: 'true'
