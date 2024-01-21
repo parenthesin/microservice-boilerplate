@@ -85,8 +85,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Scan
+      - name: Static application security testing
         uses: clj-holmes/clj-holmes-action@main
+        with:
+          output-type: 'stdout'
+          fail-on-result: 'true'
+
+      - name: Security Dependency Scan
+        uses: clj-holmes/clj-watson-action@main
         with:
           output-type: 'stdout'
           fail-on-result: 'true'
