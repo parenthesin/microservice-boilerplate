@@ -11,12 +11,15 @@ services:
       - db-data:/var/lib/postgresql/data
 
   db-admin:
-    image: dpage/pgadmin4
+    image: elestio/pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: pg@pg.cc
       PGADMIN_DEFAULT_PASSWORD: pg
+      PGADMIN_LISTEN_PORT: 8080
     ports:
-      - "5433:80"
+      - "5433:8080"
+    volumes:
+      - db-data:/pgadmin4/servers.json
 
 volumes:
     db-data:

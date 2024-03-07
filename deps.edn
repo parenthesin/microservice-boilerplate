@@ -1,11 +1,11 @@
 {:paths ["src" "resources"]
 
  :deps {org.clojure/clojure {:mvn/version "1.11.1"}
-        com.github.parenthesin/components {:mvn/version "0.2.3"
+        com.github.parenthesin/components {:mvn/version "0.2.4"
                                            :exclusions  [metosin/malli]}
-        com.github.seancorfield/honeysql {:mvn/version "2.5.1103"}
+        com.github.seancorfield/honeysql {:mvn/version "2.6.1126"}
         metosin/reitit-swagger {:mvn/version "0.6.0"}
-        org.postgresql/postgresql {:mvn/version "42.7.1"}
+        org.postgresql/postgresql {:mvn/version "42.7.2"}
         prismatic/schema {:mvn/version "1.4.1"}
         prismatic/schema-generators {:mvn/version "0.1.5"}}
 
@@ -14,14 +14,14 @@
          :extra-deps  {org.clojars.bigsy/pg-embedded-clj {:mvn/version "1.0.1"}
                        lambdaisland/kaocha {:mvn/version "1.87.1366"}
                        lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}
-                       nubank/matcher-combinators {:mvn/version "3.8.8"}
+                       nubank/matcher-combinators {:mvn/version "3.9.1"}
                        nubank/state-flow {:mvn/version "5.14.5"}}
          :main-opts   ["-m" "kaocha.runner"]}
 
-  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp-standalone {:mvn/version "2023.12.29-12.09.27"}}
+  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp-standalone {:mvn/version "2024.03.01-11.37.51"}}
                 :main-opts ["-m" "clojure-lsp.main"]}
 
-  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.45.0"}}
+  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.46.0"}}
           :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}
 
   :migratus {:main-opts ["-m" "parenthesin.helpers.migrations"]}
