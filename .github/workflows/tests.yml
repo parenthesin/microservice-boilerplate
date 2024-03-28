@@ -33,7 +33,7 @@ jobs:
       - name: Install clojure cli
         uses: DeLaGuardo/setup-clojure@master
         with:
-          cli: 1.11.1.1435
+          cli: 1.11.2.1446
 
       - name: Cache Maven packages
         uses: actions/cache@v4
@@ -60,12 +60,12 @@ jobs:
       - name: Install clojure cli
         uses: DeLaGuardo/setup-clojure@master
         with:
-          cli: 1.11.1.1435
+          cli: 1.11.2.1446
 
       - name: Setup clojure-lsp
-        uses: clojure-lsp/setup-clojure-lsp@v1
+        uses: clojure-lsp/setup-clojure-lsp@v1.0.2
         with:
-          clojure-lsp-version: 2024.03.01-11.37.51
+          clojure-lsp-version: 2024.03.13-13.11.00
 
       - name: Execute lint checks
         run: |
