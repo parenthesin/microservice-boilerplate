@@ -1,10 +1,10 @@
 {:paths ["src" "resources"]
 
- :deps {org.clojure/clojure {:mvn/version "1.11.2"}
-        com.github.parenthesin/components {:mvn/version "0.2.5"
+ :deps {org.clojure/clojure {:mvn/version "1.11.3"}
+        com.github.parenthesin/components {:mvn/version "0.3.0"
                                            :exclusions  [metosin/malli]}
-        com.github.seancorfield/honeysql {:mvn/version "2.6.1126"}
-        metosin/reitit-swagger {:mvn/version "0.6.0"}
+        com.github.seancorfield/honeysql {:mvn/version "2.6.1147"}
+        metosin/reitit-swagger {:mvn/version "0.7.1"}
         org.postgresql/postgresql {:mvn/version "42.7.3"}
         prismatic/schema {:mvn/version "1.4.1"}
         prismatic/schema-generators {:mvn/version "0.1.5"}}
@@ -12,20 +12,20 @@
  :aliases
  {:test {:extra-paths ["test"]
          :extra-deps  {org.clojars.bigsy/pg-embedded-clj {:mvn/version "1.0.1"}
-                       lambdaisland/kaocha {:mvn/version "1.88.1376"}
+                       lambdaisland/kaocha {:mvn/version "1.91.1392"}
                        lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}
                        nubank/matcher-combinators {:mvn/version "3.9.1"}
-                       nubank/state-flow {:mvn/version "5.15.0"}}
+                       nubank/state-flow {:mvn/version "5.17.0"}}
          :main-opts   ["-m" "kaocha.runner"]}
 
-  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp-standalone {:mvn/version "2024.03.13-13.11.00"}}
+  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp-standalone {:mvn/version "2024.04.22-11.50.26"}}
                 :main-opts ["-m" "clojure-lsp.main"]}
 
-  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.47.1"}}
+  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.49.1"}}
           :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}
 
   :migratus {:main-opts ["-m" "parenthesin.helpers.migrations"]}
 
-  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.10.0"}}
+  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.10.4"}}
           :ns-default build
           :exec-args {:uber-file "target/service.jar"}}}}
