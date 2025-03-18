@@ -1,31 +1,31 @@
 {:paths ["src" "resources"]
 
  :deps {org.clojure/clojure {:mvn/version "1.12.0"}
-        com.github.parenthesin/components {:mvn/version "0.3.1"
+        com.github.parenthesin/components {:mvn/version "0.4.3"
                                            :exclusions  [metosin/malli]}
-        com.github.seancorfield/honeysql {:mvn/version "2.6.1203"}
+        com.github.seancorfield/honeysql {:mvn/version "2.7.1295"}
         metosin/reitit-swagger {:mvn/version "0.7.2"}
-        org.postgresql/postgresql {:mvn/version "42.7.4"}
+        org.postgresql/postgresql {:mvn/version "42.7.5"}
         prismatic/schema {:mvn/version "1.4.1"}
         prismatic/schema-generators {:mvn/version "0.1.5"}}
 
  :aliases
  {:test {:extra-paths ["test"]
-         :extra-deps  {org.clojars.bigsy/pg-embedded-clj {:mvn/version "1.0.1"}
+         :extra-deps  {org.clojars.bigsy/pg-embedded-clj {:mvn/version "1.0.2"}
                        lambdaisland/kaocha {:mvn/version "1.91.1392"}
                        lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}
                        nubank/matcher-combinators {:mvn/version "3.9.1"}
-                       nubank/state-flow {:mvn/version "5.18.0"}}
+                       nubank/state-flow {:mvn/version "5.20.1"}}
          :main-opts   ["-m" "kaocha.runner"]}
 
-  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp-standalone {:mvn/version "2024.08.05-18.16.00"}}
+  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp-standalone {:mvn/version "2025.03.07-17.42.36"}}
                 :main-opts ["-m" "clojure-lsp.main"]}
 
-  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.50.2"}}
+  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.52.1"}}
           :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}
 
   :migratus {:main-opts ["-m" "parenthesin.helpers.migrations"]}
 
-  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.10.5"}}
+  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.10.7"}}
           :ns-default build
           :exec-args {:uber-file "target/service.jar"}}}}
