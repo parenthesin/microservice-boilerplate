@@ -11,7 +11,9 @@
 
  :aliases
  {:test {:extra-paths ["test"]
-         :extra-deps  {org.clojars.bigsy/pg-embedded-clj {:mvn/version "1.0.2"}
+         :extra-deps  {io.zonky.test/embedded-postgres {:mvn/version "2.0.4"}
+                       io.zonky.test.postgres/embedded-postgres-binaries-darwin-arm64v8 {:mvn/version "14.8.0"}
+                       org.clojars.bigsy/pg-embedded-clj {:mvn/version "1.0.2"}
                        lambdaisland/kaocha {:mvn/version "1.91.1392"}
                        lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}
                        nubank/matcher-combinators {:mvn/version "3.9.1"}
