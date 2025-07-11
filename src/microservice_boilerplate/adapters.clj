@@ -23,9 +23,10 @@
       (.format (DateTimeFormatter/ofPattern str-format))))
 
 (s/defn wire->usd-price  :- s/Num
-  [wire :- schemas.wire-out/CoinDeskResponse]
+  [wire :- schemas.wire-out/KrakenResponse]
   (-> wire
-      (get-in [:bpi :USD :rate_float])
+      (get-in [:result :XXBTZUSD :c])
+      first
       bigdec))
 
 (s/defn ^:private wire-in->db  :- schemas.db/WalletTransaction
