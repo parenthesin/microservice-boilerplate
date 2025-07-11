@@ -20,27 +20,23 @@
            (adapters/inst->utc-formated-string #inst "1987-02-10T09:38:43.000Z"
                                                "yyyy-MM-dd hh:mm:ss")))))
 
-(def coindesk-response-fixture
-  {:time {:updated "Jun 26, 2021 20:06:00 UTC"
-          :updatedISO "2021-06-26T20:06:00+00:00"
-          :updateduk "Jun 26, 2021 at 21:06 BST"}
-   :bpi {:USD
-         {:code "USD"
-          :symbol "&#36;"
-          :rate "31,343.9261"
-          :description "United States Dollar"
-          :rate_float 31343.9261}
-         :GBP
-         {:code "GBP"
-          :symbol "&pound;"
-          :rate "22,573.9582"
-          :description "British Pound Sterling"
-          :rate_float 22573.9582}}})
+(def kraken-response-fixture
+  {:error []
+   :result {:XXBTZUSD
+            {:v [152.11586649 2142.49260838]
+             :o 115990.20000
+             :l [115212.50000 11060 0.00000]
+             :c [116279.00000 0.01177482]
+             :h [116282.30000 116800.00000]
+             :b [116279.00000 4 4.000]
+             :t [4377 51302]
+             :p [115713.81470 113745.05028]
+             :a [116279.10000 1 1.000]}}})
 
 (deftest wire->usd-price-test
-  (testing "should adapt coindesk response into a number"
-    (is (match? 31343.9261M
-                (adapters/wire->usd-price coindesk-response-fixture)))))
+  (testing "should adapt kraken response into a number"
+    (is (match? 116279M
+                (adapters/wire->usd-price kraken-response-fixture)))))
 
 (defspec wire-in-db-test 50
   (properties/for-all [id (g/generator s/Uuid)

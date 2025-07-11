@@ -37,8 +37,8 @@
   (flow "should interact with system"
 
     (flow "prepare system with http-out mocks"
-      (state-flow.http/set-http-out-responses! {"https://api.coindesk.com/v1/bpi/currentprice.json"
-                                                {:body {:bpi {:USD {:rate_float 30000.00}}}
+      (state-flow.http/set-http-out-responses! {"https://api.kraken.com/0/public/Ticker?pair=XBTUSD"
+                                                {:body {:result {:XXBTZUSD {:c [30000.00 0.01]}}}
                                                  :status 200}})
 
       (flow "should insert deposit into wallet"

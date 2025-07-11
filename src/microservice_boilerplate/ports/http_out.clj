@@ -6,7 +6,7 @@
 
 (s/defn get-btc-usd-price :- s/Num
   [http :- schemas.types/HttpComponent]
-  (->> {:url "https://api.coindesk.com/v1/bpi/currentprice.json"
+  (->> {:url "https://api.kraken.com/0/public/Ticker?pair=XBTUSD"
         :as :json
         :method :get}
        (components.http/request http)
