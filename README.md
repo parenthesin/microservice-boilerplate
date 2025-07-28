@@ -8,11 +8,12 @@ that fetch the current btc price in USD and you can check your transaction histo
 - [parenthesin/components](https://github.com/parenthesin/components): Helpers and component wrappers to give a foundation to create new services in clojure,
 you can find components for database, http, webserver and tools for db migrations.
 
-Verb | URL                | Description
------| ------------------ | ------------------------------------------------
-GET  | /wallet/history    | get all wallet entries and current total
-POST | /wallet/deposit    | do a deposit in btc in the wallet
-POST | /wallet/withdrawal | do a withdrawal in btc in the wallet if possible
+Verb | URL                     | Description
+-----| ----------------------- | ------------------------------------------------
+GET  | /wallet/current-btc-usd | get current btc price in usd
+GET  | /wallet/history         | get all wallet entries and current total
+POST | /wallet/deposit         | do a deposit in btc in the wallet
+POST | /wallet/withdrawal      | do a withdrawal in btc in the wallet if possible
 
 ## Repl
 To open a nrepl
