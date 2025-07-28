@@ -17,3 +17,7 @@
   {:entries [WalletEntry]
    :total-btc s/Num
    :total-current-usd s/Num})
+
+(s/defschema BtcUsdPair
+  {:btc-amount s/Num
+   :usd-amount s/Num})

@@ -12,6 +12,10 @@
   {:entries [schemas.db/WalletEntry]
    :usd-price schemas.types/PositiveNumber})
 
+(s/defn get-btc-usd-price :- schemas.types/PositiveNumber
+  [{:keys [http]} :- schemas.types/Components]
+  (http-out/get-btc-usd-price http))
+
 (s/defn get-wallet :- WalletHistory
   [{:keys [http database]} :- schemas.types/Components]
   (let [current-usd-price (http-out/get-btc-usd-price http)
