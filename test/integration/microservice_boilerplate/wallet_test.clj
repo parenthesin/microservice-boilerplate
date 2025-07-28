@@ -41,6 +41,14 @@
                                                 {:body {:result {:XXBTZUSD {:c [30000.00 0.01]}}}
                                                  :status 200}})
 
+      (flow "should get current btc / usd pair"
+        (match? (matchers/embeds {:status 200
+                                  :body  {:btc-amount 1
+                                          :usd-amount 30000.00}})
+
+                (state-flow.server/request! {:method :get
+                                             :uri    "/wallet/current-btc-usd"})))
+
       (flow "should insert deposit into wallet"
         (match? (matchers/embeds {:status 201
                                   :body  {:id string?

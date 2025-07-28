@@ -2,6 +2,12 @@
   (:require [microservice-boilerplate.adapters :as adapters]
             [microservice-boilerplate.controllers :as controllers]))
 
+(defn get-btc-usd-price
+  [{components :components}]
+  {:status 200
+   :body {:btc-amount 1
+          :usd-amount (controllers/get-btc-usd-price components)}})
+
 (defn get-history
   [{components :components}]
   (let [{:keys [entries usd-price]} (controllers/get-wallet components)]
